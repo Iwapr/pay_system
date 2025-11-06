@@ -6,7 +6,7 @@
 
 ## 演示
 
-在线演示地址见: [http://47.100.173.231:44444](http://47.100.173.231:44444)
+在线演示地址见: [https://xiaomu-possystem.vhvy.me](https://xiaomu-possystem.vhvy.me)
 
 默认用户名/密码： admin / password
 
