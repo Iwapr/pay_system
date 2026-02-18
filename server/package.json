@@ -17,17 +17,18 @@
   "license": "ISC",
   "dependencies": {
     "@hapi/joi": "^16.1.7",
-    "bcrypt": "^3.0.7",
+    "bcryptjs": "^2.4.3",
     "core-js": "^3.6.4",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mathjs": "^6.2.5",
     "moment": "^2.24.0",
     "pinyin": "^2.9.0",
-    "sqlite3": "^4.1.0"
+    "sqlite3": "^5.1.7"
   },
   "devDependencies": {
     "cross-env": "^6.0.3",
+    "electron": "^29.4.6",
     "electron-rebuild": "^1.10.1",
     "webpack": "^4.42.1",
     "webpack-cli": "^3.3.11",

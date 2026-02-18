@@ -19,34 +19,40 @@
   },
   "homepage": "https://github.com/vhvy/XiaoMu-PosSystem#readme",
   "devDependencies": {
+    "@electron/rebuild": "^4.0.3",
     "cross-env": "^7.0.2",
-    "electron-builder": "^22.4.1",
+    "electron": "^29.0.0",
+    "electron-builder": "^24.13.3",
     "eslint": "^6.6.0",
-    "eslint-plugin-react": "^7.16.0",
-    "electron": "^8.2.0"
+    "eslint-plugin-react": "^7.16.0"
   },
   "dependencies": {
     "@hapi/joi": "^16.1.7",
-    "bcrypt": "^3.0.7",
+    "bcryptjs": "^2.4.3",
     "core-js": "^3.6.4",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mathjs": "^6.2.5",
     "moment": "^2.24.0",
     "pinyin": "^2.9.0",
-    "sqlite3": "^4.1.0"
+    "sqlite3": "^5.1.7"
   },
   "build": {
     "appId": "com.xiaomupos.system",
+    "npmRebuild": false,
+    "asarUnpack": [
+      "node_modules/sqlite3/**"
+    ],
     "files": [
       "main.js",
       "public/**/*",
-      "client/dist/**/*"
+      "client/dist/**/*",
+      "node_modules/sqlite3/**"
     ],
     "extraFiles": [
       {
         "from": "server/db/data.db",
-        "to": "db/data.db"
+        "to": "Resources/db/data.db"
       }
     ],
     "directories": {

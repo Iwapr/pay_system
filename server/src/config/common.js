@@ -1,6 +1,9 @@
 import path from "path";
 
-const db_path = path.resolve("./", "db/data.db");
+// DB_PATH 由 main.js 在启动时注入（运行时变量，不被 webpack DefinePlugin 替换）
+// app.isPackaged=true  → Contents/Resources/db/data.db
+// app.isPackaged=false → <projectRoot>/server/db/data.db
+const db_path = process.env.DB_PATH || path.resolve("./", "server/db/data.db");
 
 const common = {
     port: 8888,

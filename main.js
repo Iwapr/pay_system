@@ -60,6 +60,13 @@ function startServer() {
     fs.readFile(pathname)
         .then(v => console.log("检查到不启动服务器的flag，不启动服务器！"))
         .catch(error => {
+            // 注入 DB 路径，供 bundle.cjs 运行时读取（避免 webpack 编译期替换 NODE_ENV）
+            if (!process.env.DB_PATH) {
+                const { app } = require("electron");
+                process.env.DB_PATH = app.isPackaged
+                    ? path.join(process.resourcesPath, "db", "data.db")
+                    : path.join(__dirname, "server", "db", "data.db");
+            }
             require("./public/bundle.cjs");
             // 没有不启动服务器的flag，启动服务器!
         });
