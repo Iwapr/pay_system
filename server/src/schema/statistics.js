@@ -12,6 +12,8 @@
  */
 import Joi from "@hapi/joi";
 
+const timeStampSchema = Joi.number().required();
+
 const queryTypeSchema = Joi.string().min(1).max(10).required();
 
 const queryKeySchema = Joi.string().min(1).max(30).required();

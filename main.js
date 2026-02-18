@@ -36,12 +36,16 @@ function createWindow() {
         },
     });
 
-    // 加载打包后的 React 应用入口 HTML（client/dist/index.html）
-    mainWindow.loadURL(url.format({
-        pathname: path.join(__dirname, "./client/dist/index.html"),
-        protocol: "file",
-        slashes: true
-    }));
+    // 开发模式加载 webpack-dev-server；生产模式加载打包后的静态文件
+    if (process.env.NODE_ENV === "development") {
+        mainWindow.loadURL("http://localhost:9000");
+    } else {
+        mainWindow.loadURL(url.format({
+            pathname: path.join(__dirname, "./client/dist/index.html"),
+            protocol: "file",
+            slashes: true
+        }));
+    }
 
     // 开发模式下自动开启右侧开发者工具（生产模式下不开启）
     process.env.NODE_ENV === "development" && mainWindow.webContents.openDevTools({ mode: "right" });

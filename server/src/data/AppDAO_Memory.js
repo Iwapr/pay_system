@@ -126,36 +126,3 @@ class AppDAO {
 }
 
 export default AppDAO;
-                    reject(err);
-                } else {
-                    resolve(rows);
-                }
-            });
-        });
-    }
-
-    each(sql, param = []) {
-        return new Promise((resolve, reject) => {
-            let result = [];
-            this.db.get(sql, param,
-                (err, row) => {
-                    if (err) {
-                        console.log(err);
-                        reject(err);
-                    } else {
-                        result.push(row);
-                    }
-                },
-                (err, len) => {
-                    if (err) {
-                        console.log(err);
-                        reject(err);
-                    } else {
-                        resolve(len);
-                    }
-                });
-        });
-    }
-}
-
-export default AppDAO;

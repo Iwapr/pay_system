@@ -10,6 +10,8 @@
  *  - updateSupplierSchema:   更新供应商 {name, update_value: {new_name?, new_phone?, new_description?}}
  */
 import Joi from "@hapi/joi";
+
+export const name = Joi.string().min(2).max(10).error(errors => {
     errors.forEach(err => {
         switch (err.code) {
             case "string.empty":
@@ -27,8 +29,8 @@ import Joi from "@hapi/joi";
     });
     return errors;
 });
-const phone = Joi.string().min(5).max(13);
-const description = Joi.string().min(1).max(100);
+export const phone = Joi.string().min(5).max(13);
+export const description = Joi.string().min(1).max(100);
 
 export const createSupplierSchema = Joi.object({
     name: name.required(),

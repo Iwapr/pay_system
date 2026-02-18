@@ -4,7 +4,9 @@
  * @module views/Home/Main/market/Cash/CashLeft/CashVipDetails
  */
 import React from "react";
-import styled from "../../../../../../styles/cash.scss";({ label, value }) {
+import styled from "../../../../../../styles/cash.scss";
+
+function DetailItem({ label, value }) {
     return (
         <div className={styled["cash-vip-details"]}>
             <span className={styled["label"]}>{label}:&nbsp;&nbsp;</span>

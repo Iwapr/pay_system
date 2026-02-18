@@ -13,6 +13,7 @@
  *  - changeVipMemberSchema:    换卡验证
  */
 import Joi from "@hapi/joi";
+export const code = Joi.string().regex(/^\d{4,10}$/);
 export const name = Joi.string().min(1).max(10);
 export const vip_type = Joi.string().min(1).max(10);
 export const sex = Joi.string().regex(/^[男女]$/);
