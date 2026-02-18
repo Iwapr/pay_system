@@ -12,9 +12,10 @@
 import express from "express";
 import { throwError } from "../../middleware/handleError.js";
 import { validBody } from "../../middleware/validBody.js";
-import { createOrderSchema, undoOrderSchema, addOrderVipSchema } from "../../schema/orders.js";
+import { createOrderSchema, undoOrderSchema, addOrderVipSchema, alipayPaySchema } from "../../schema/orders.js";
 import OrdersTask from "../../tasks/frontend/orders.js";
 import VipTask from "../../tasks/vip.js";
+import { AlipayService } from "../../lib/alipay.js";
 
 const route = express.Router();
 
@@ -143,6 +144,36 @@ route.get("/:id", async (req, res, next) => {
     }
 
     res.json(result);
+});
+
+/**
+ * POST /api/front/order/alipay-pay
+ *
+ * 支付宝条码支付：收银员扫去顾客手机上的付款码，后端调支付宝 API 扣款。
+ *
+ * 请求体：
+ *   auth_code    - 付款码（扫码枪扫入）
+ *   total_amount - 实付金额（元）
+ *   subject      - 订单标题（显示在支付宝账单中）
+ *   out_trade_no - 商户订单号（使用系统 order_id）
+ *
+ * 响应：
+ *   成功：{ success: true, tradeNo: "支付宝流水号" }
+ *   失败：{ success: false, message: "错误原因" }
+ */
+route.post("/alipay-pay", validBody(
+    alipayPaySchema,
+    "支付参数不正确!"
+), async (req, res, next) => {
+    const { auth_code, total_amount, subject, out_trade_no } = req.body;
+
+    try {
+        const result = await AlipayService.pay(auth_code, total_amount, subject, out_trade_no);
+        res.json(result);
+    } catch (err) {
+        // 支付宝尚未配置或网络异常
+        return throwError(next, err.message || "支付宝服务异常");
+    }
 });
 
 export default route;

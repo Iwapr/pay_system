@@ -89,6 +89,11 @@ function startServer() {
                     ? path.join(process.resourcesPath, "db", "data.db")   // 打包后：Contents/Resources/db/data.db
                     : path.join(__dirname, "server", "db", "data.db");    // 开发时：<项目根>/server/db/data.db
             }
+            // 先杀掉占用 8888 端口的旧进程（比如遗留的 dev nodemon），再加载服务
+            const { execSync } = require("child_process");
+            try {
+                execSync("lsof -ti :8888 | xargs kill -9", { stdio: "ignore" });
+            } catch (_) { /* 端口空闲时 xargs 返回非零码，忽略即可 */ }
             require("./public/bundle.cjs");  // 加载并启动 Express 服务器
         });
 }

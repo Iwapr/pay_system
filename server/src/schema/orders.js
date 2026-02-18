@@ -49,3 +49,18 @@ export const addOrderVipSchema = Joi.object({
     order_id: order_id.required(),
     vip_code: code.required()
 });
+
+/**
+ * 支付宝条码支付入参校验
+ *
+ * auth_code    - 顾客付款码（扫码枪读入的字符串，18-24 位数字，以 25-30 开头）
+ * total_amount - 实付金额（元，精确到分，范围 0.01-100000）
+ * subject      - 订单标题（如"小牧收银台-消费"，显示在支付宝账单里）
+ * out_trade_no - 商户唯一订单号（使用系统生成的 order_id）
+ */
+export const alipayPaySchema = Joi.object({
+    auth_code: Joi.string().regex(/^\d{16,24}$/).required(),
+    total_amount: Joi.number().min(0.01).max(100000).required(),
+    subject: Joi.string().min(1).max(50).required(),
+    out_trade_no: Joi.number().min(1000000000000).required()  // 13位以上数字，客户端用 Date.now() 生成
+});

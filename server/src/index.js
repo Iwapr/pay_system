@@ -62,6 +62,15 @@ app.use("*", (req, res) => {
 app.use(handleError);
 
 // 启动监听
-app.listen(port, () => {
+const server = app.listen(port, () => {
     console.log(`Server Listen on port ${port}...`);
+});
+
+// 端口被占用时优雅降级（不抛出 Uncaught Exception 弹窗）
+server.on("error", (err) => {
+    if (err.code === "EADDRINUSE") {
+        console.warn(`[server] 端口 ${port} 已被占用，跳过启动（已有服务在运行）`);
+    } else {
+        console.error("[server] 启动失败:", err.message);
+    }
 });
