@@ -5,3 +5,5 @@ public/
 .DS_Store
 .noserver
 *.db
+# 敏感密钥配置，不提交到仓库（参考 secrets.example.js 创建）
+server/src/config/secrets.js
