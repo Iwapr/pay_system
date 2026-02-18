@@ -1,3 +1,8 @@
+/**
+ * @file VipChangeModal.jsx
+ * @description 会员等级修改弹窗组件，支持手动调整会员等级并同步更新服务器
+ * @module views/Home/Main/vip/Setting/VipChangeModal
+ */
 import React from "react";
 import { Modal, Input, message, Form } from "antd";
 import { VipManage } from "../../../../../tasks/vip";

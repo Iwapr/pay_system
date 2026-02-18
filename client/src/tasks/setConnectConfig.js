@@ -1,3 +1,9 @@
+/**
+ * client/src/tasks/setConnectConfig.js - 服务器地址配置工具
+ *
+ * setConnectConfig(url): 将用户输入的服务器地址持久化到 localStorage。
+ * 如果输入为空则使用 config 中的默认 baseURL。
+ */
 import { message } from "antd";
 import { config } from "../config";
 

@@ -1,3 +1,15 @@
+/**
+ * server/src/tasks/today.js - 首页今日数据聚合层
+ *
+ * 综合多个 DAO，生成首页所需的今日销售汇总数据。
+ * 管理员视图（getAdminTodayData）和收银员视图（getCashierTodayData）返回内容不同。
+ *
+ * 方法列表：
+ *  - getTodayOrderCount(start, end):    今日订单总数和 VIP 订单数
+ *  - getTodayData(isAdmin, username):   分角色返回今日数据
+ *  - getAdminTodayData(username):       管理员视角今日数据（营业额/利润/商品数等）
+ *  - getCashierTodayData(username):     收银员视角今日数据
+ */
 import OrderTasks from "./frontend/orders.js";
 import { StatisticsTasks } from "./statistics.js";
 import { getNightTimeStrap, getWeekendStartTimeStrap, getFormatTime, getNextDayStartTimeStrap } from "../lib/time.js";

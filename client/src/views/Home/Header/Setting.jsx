@@ -1,3 +1,8 @@
+/**
+ * @file Setting.jsx
+ * @description 顶部导航栏设置抽屉组件，支持多标签页和收银热键显示状态的开关配置
+ * @module views/Home/Header/Setting
+ */
 import React, { useState, useMemo } from "react";
 import { Icon, Drawer, Switch } from "antd";
 import { useDispatch, useSelector } from "react-redux";

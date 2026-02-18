@@ -1,3 +1,8 @@
+/**
+ * @file PieCharts.jsx
+ * @description ECharts饩图封装组件，用于展示商品分类销售占比分析，支持窗口自适应
+ * @module views/Home/Main/home/common/PieCharts
+ */
 import React, { useState, useEffect } from "react";
 import echarts from "echarts/lib/echarts";
 import "echarts/lib/chart/pie";

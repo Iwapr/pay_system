@@ -1,3 +1,8 @@
+/**
+ * @file CountCard.jsx
+ * @description 首页数据统计卡片组件，以图标+数值形式展示多个业务指标
+ * @module views/Home/Main/home/common/CountCard
+ */
 import React from "react";
 import styled from "../../../../../styles/home.scss";
 import { IconOnline } from "../../../../../components/IconOnline";

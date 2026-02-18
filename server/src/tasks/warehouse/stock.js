@@ -1,3 +1,14 @@
+/**
+ * server/src/tasks/warehouse/stock.js - 进货单数据操作层（DAO 封装）
+ *
+ * 封装仓库进货单（stock）和进货单明细（stock_detail）的数据库操作。
+ *
+ * 方法列表：
+ *  - getStock(args, type):               查询进货单（全部或按日期/ID）
+ *  - mapStockDetailsIDToText(list):       将明细中的商品 ID 映射为商品信息
+ *  - getStockDetails(id):                查询进货单明细
+ *  - createStockOrder(data):             创建新进货单（含明细写入和库存更新）
+ */
 import AppDAO from "../../data/AppDAO.js";
 import CommodityTask from "../commodity.js";
 

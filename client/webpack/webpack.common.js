@@ -1,3 +1,9 @@
+/**
+ * @file webpack.common.js
+ * @description 客户端 Webpack 公共基础配置，包含入口文件、Babel转译、CSS/SCSS 处理、
+ * HTML 模板生成、静态资源复制等公用配置项，供开发和生产环境共同继承。
+ * @module client/webpack/common
+ */
 const path = require("path");
 const htmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");

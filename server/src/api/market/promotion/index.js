@@ -1,3 +1,15 @@
+/**
+ * server/src/api/market/promotion/index.js - 促销活动管理路由
+ *
+ * 路由：
+ *  GET    /api/market/promotion              - 获取所有促销活动
+ *  POST   /api/market/promotion/create       - 创建促销活动
+ *  PUT    /api/market/promotion/update       - 更新促销活动
+ *  DELETE /api/market/promotion/delete/:name - 删除促销活动
+ *  GET    /api/market/promotion/type         - 获取活动类型列表
+ *
+ * 认证：需要管理员权限。
+ */
 import express from "express";
 import PromotionTask from "../../../tasks/market/promotion.js";
 import { validBody } from "../../../middleware/validBody.js";

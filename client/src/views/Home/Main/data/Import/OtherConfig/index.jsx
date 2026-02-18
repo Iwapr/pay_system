@@ -1,3 +1,8 @@
+/**
+ * @file index.jsx
+ * @description 数据导入其他配置面板，用于配置字段值映射转换规则并预览映射结果
+ * @module views/Home/Main/data/Import/OtherConfig
+ */
 import React, { useMemo, useState } from "react";
 import styled from "../../../../../../styles/data/import.scss";
 import { ValuePair } from "./ValuePair";

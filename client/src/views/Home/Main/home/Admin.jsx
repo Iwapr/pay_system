@@ -1,3 +1,8 @@
+/**
+ * @file Admin.jsx
+ * @description 管理员首页看板，展示销售汇总数据及分类占比饥图和7天趋势折线图
+ * @module views/Home/Main/home/Admin
+ */
 import React, { useMemo } from "react";
 import styled from "../../../../styles/home.scss";
 import { CountCard } from "./common/CountCard";

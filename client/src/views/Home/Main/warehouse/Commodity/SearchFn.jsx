@@ -1,3 +1,8 @@
+/**
+ * @file SearchFn.jsx
+ * @description 商品管理搜索功能组件，支持按商品名称和条码进行分类筛选查询
+ * @module views/Home/Main/warehouse/Commodity/SearchFn
+ */
 import React, { useRef, useEffect } from "react";
 import styled from "../../../../../styles/warehouse/commodity.scss";
 import { Input, Button } from "antd";

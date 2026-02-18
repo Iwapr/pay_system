@@ -1,3 +1,8 @@
+/**
+ * @file MultipleTabs.jsx
+ * @description 多标签页导航组件，支持标签页的切换、关闭、右键菜单与滚动定位
+ * @module views/Home/MultipleTabs
+ */
 import React, { useRef, useEffect, useState } from "react";
 import { Icon } from "antd";
 import { useTabs } from "./TabsProvider";

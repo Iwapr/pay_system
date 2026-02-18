@@ -1,3 +1,11 @@
+/**
+ * server/src/api/statistics/trends.js - 销售趋势统计路由
+ *
+ * GET /api/statistics/trends - 返回指定时间段内的销售趋势数据，
+ * 支持按小时/天/月（type 参数 hour/day/month）汇总。
+ *
+ * 认证：需要有效的 JWT Token。
+ */
 import express from "express";
 import { validBody } from "../../middleware/validBody.js";
 import { throwError } from "../../middleware/handleError.js";

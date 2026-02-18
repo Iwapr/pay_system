@@ -1,3 +1,8 @@
+/**
+ * @file index.jsx
+ * @description 数据导入功能主入口，分怵上传文件、字段配置、映射设置和提交上传
+ * @module views/Home/Main/data/Import
+ */
 import React, { useState, useMemo } from "react";
 import styled from "../../../../../styles/data/import.scss";
 import { Steps, Button } from "antd";

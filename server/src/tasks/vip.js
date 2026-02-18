@@ -1,3 +1,21 @@
+/**
+ * server/src/tasks/vip.js - 会员数据操作层（DAO 封装）
+ *
+ * 封装 VIP 会员相关数据库操作，包括积分计算、
+ * 等级映射和会员搜索（支持拼音首字母）。
+ *
+ * 方法列表：
+ *  - getVipDetails(vip, type):       查询会员详情（支持 code/name/phone/pinyin）
+ *  - mapVipIdToDetails(list):        将会员列表的等级 ID 映射为文本
+ *  - createVipMember(data):          创建新会员
+ *  - updateVipMember(code, value):   更新会员信息
+ *  - deleteVipMember(code):          删除会员
+ *  - getPointRules():               获取积分规则
+ *  - updatePointRules(value):       更新积分规则
+ *  - calcPoints(money, rules):      根据消费金额计算积分
+ *  - addPoints(code, delta):        增减会员积分
+ *  - changeCard(code, newCode):     更换会员卡号
+ */
 import AppDAO from "../data/AppDAO.js";
 import { getPinyin } from "../lib/pinyin.js";
 import { mathc } from "../lib/mathc.js";

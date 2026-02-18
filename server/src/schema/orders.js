@@ -1,3 +1,18 @@
+/**
+ * server/src/schema/orders.js - 订单请求参数验证 Schema
+ *
+ * 使用 Joi 定义前台订单相关接口的输入验证规则。
+ *
+ * 导出内容：
+ *  - price:               正数单价 (0-100000)
+ *  - negative_price:      可为负的单价（退货） (max=100000)
+ *  - order_id:            订单号（数字大于 10^14）
+ *  - count:               商品数量 (0.01-10000)
+ *  - commodity:           订单单条商品结构 {barcode, sale_price, origin_price, count, status?}
+ *  - createOrderSchema:   创建订单 {vip_code?, pay_type?, ...}
+ *  - undoOrderSchema:     撤销订单 {order_id}
+ *  - addVipOrderSchema:   为订单添加 VIP {order_id, vip_code}
+ */
 import Joi from "@hapi/joi";
 import { code } from "./vip_member.js";
 import { barcode, sale_price } from "./commodity.js";

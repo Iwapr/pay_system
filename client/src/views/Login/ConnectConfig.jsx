@@ -1,3 +1,8 @@
+/**
+ * @file ConnectConfig.jsx
+ * @description 服务器连接配置组件，支持配置后端 API 地址并持久化到本地存储
+ * @module views/Login/ConnectConfig
+ */
 import React, { useState } from "react";
 import { Form, Input, Button, Icon, Modal } from "antd";
 import { connect, useSelector, useDispatch } from "react-redux";

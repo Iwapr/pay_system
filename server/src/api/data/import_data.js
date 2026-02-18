@@ -1,3 +1,11 @@
+/**
+ * server/src/api/data/import_data.js - 数据导入路由 POST /api/data/import/commodity
+ *
+ * 批量导入商品数据，支持配置冲突处理策略（barcode_exist/category_exist/supplier_exist）。
+ *
+ * 认证：需要管理员权限。
+ * 验证：importCommpditySchema（rules + data[] 必填）。
+ */
 import express from "express";
 import { validBody } from "../../middleware/validBody.js";
 import { importCommpditySchema } from "../../schema/data.js";

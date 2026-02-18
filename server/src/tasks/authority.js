@@ -1,3 +1,13 @@
+/**
+ * server/src/tasks/authority.js - 权限数据操作层（DAO 封装）
+ *
+ * 封装对 authority 表（权限定义）的数据库操作。
+ *
+ * 方法列表：
+ *  - getAuthorityDetails(auth):     按 ID 或权限名查询权限详情
+ *  - getAllAuthority():             获取所有权限
+ *  - mapAuthorityNameToID(name):    将权限名称（或数组）转换为对应的 ID
+ */
 import AppDAO from "../data/AppDAO.js";
 
 class AuthorityTask {

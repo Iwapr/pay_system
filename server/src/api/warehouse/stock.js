@@ -1,3 +1,13 @@
+/**
+ * server/src/api/warehouse/stock.js - 进货单管理路由
+ *
+ * 路由：
+ *  GET  /api/warehouse/stock       - 获取所有进货单列表
+ *  GET  /api/warehouse/stock/:id   - 查询单条进货单详细明细
+ *  POST /api/warehouse/stock/create - 创建新进货单（含明细，同步更新库存/进货价）
+ *
+ * 认证：需要管理员权限。
+ */
 import express from "express";
 import StockTask from "../../tasks/warehouse/stock.js";
 import { throwError } from "../../middleware/handleError.js";

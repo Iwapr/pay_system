@@ -1,3 +1,8 @@
+/**
+ * @file CommodityList.jsx
+ * @description 促销活动商品列表展示组件，包含加载状态与虚拟滚动列表
+ * @module views/Home/Main/promotion/Commodity/CommodityList
+ */
 import React from "react";
 import styled from "../../../../../styles/promotion/commodity.scss";
 import { LoadingBox } from "../../../../../components/LoadingBox";

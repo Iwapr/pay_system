@@ -1,3 +1,8 @@
+/**
+ * @file StoreName.jsx
+ * @description 系统设置中的店铺名称配置组件，支持查看与修改门店名称并保存到服务器
+ * @module views/Home/Main/system/StoreName
+ */
 import React, { useState, useEffect } from "react";
 import { Form, Input, Button, message } from "antd";
 import { StoreTasks } from "../../../../tasks/store";

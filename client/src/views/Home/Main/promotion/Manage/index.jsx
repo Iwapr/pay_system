@@ -1,3 +1,8 @@
+/**
+ * @file index.jsx
+ * @description 促销活动管理主页，整合活动列表查询、新增、修改和删除的全局操作
+ * @module views/Home/Main/promotion/Manage
+ */
 import React, { useState, useMemo } from "react";
 import { Modal, message } from "antd";
 import styled from "../../../../../styles/promotion/manage.scss";

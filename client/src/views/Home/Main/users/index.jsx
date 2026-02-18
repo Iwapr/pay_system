@@ -1,3 +1,8 @@
+/**
+ * @file index.jsx
+ * @description 员工管理页面入口组件，整合员工列表展示与增删改查和权限管理功能
+ * @module views/Home/Main/users/index
+ */
 import React, { useState, useEffect, useMemo } from "react";
 import styled from "../../../../styles/users.scss";
 import { UserManageFn } from "./UserManageFn";

@@ -1,3 +1,8 @@
+/**
+ * @file index.jsx
+ * @description 促销商品管理页，聚合商品列表、促销操作栏和修改抄屉的主容器
+ * @module views/Home/Main/promotion/Commodity
+ */
 import React, { useState, useMemo, useEffect } from "react";
 import styled from "../../../../../styles/promotion/commodity.scss";
 import { CommodityFn } from "./CommodityFn";

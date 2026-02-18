@@ -1,3 +1,8 @@
+/**
+ * @file OrderDetails.jsx
+ * @description 订单详情展示组件，渲染单笔订单中商品明细的列表信息
+ * @module views/Home/Main/statistics/orders/OrderDetails
+ */
 import React, { useMemo } from "react";
 import styled from "../../../../../styles/statistics/sales.scss";
 import { LoadingBox } from "../../../../../components/LoadingBox";

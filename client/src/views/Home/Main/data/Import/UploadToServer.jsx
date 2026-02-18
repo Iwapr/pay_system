@@ -1,3 +1,8 @@
+/**
+ * @file UploadToServer.jsx
+ * @description 将解析后的导入数据提交到服务端并展示导入结果的操作组件
+ * @module views/Home/Main/data/Import/UploadToServer
+ */
 import React, { useState, useMemo } from "react";
 import styled from "../../../../../styles/data/import.scss";
 import { Button, Icon, Spin, Result } from "antd";

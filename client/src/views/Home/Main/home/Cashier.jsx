@@ -1,3 +1,8 @@
+/**
+ * @file Cashier.jsx
+ * @description 收银员首页看板，展示当日收银汇总数据和7天销售趋势分析图
+ * @module views/Home/Main/home/Cashier
+ */
 import React from "react";
 import styled from "../../../../styles/home.scss";
 import { CountCard } from "./common/CountCard";

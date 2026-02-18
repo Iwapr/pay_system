@@ -1,3 +1,17 @@
+/**
+ * server/src/schema/promotion.js - 促销活动请求参数验证 Schema
+ *
+ * 使用 Joi 定义营销促销相关接口的输入验证规刘。
+ *
+ * 导出内容：
+ *  - name:                   活动名称 (1-20 字符)
+ *  - start_date/end_date:     活动时间努时间戳
+ *  - createPromotionSchema:  创建促销活动验证 {name, start_date, end_date, description?}
+ *  - updatePromotionSchema:  修改促销活动验证
+ *  - addCommoditySchema:     向活动添加商品验证
+ *  - editCommoditySchema:    修改活动商品验证
+ *  - delCommoditySchema:     从活动移除商品验证
+ */
 import Joi from "@hapi/joi";
 import { barcode } from "./commodity.js";
 

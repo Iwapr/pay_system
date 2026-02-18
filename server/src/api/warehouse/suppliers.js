@@ -1,3 +1,14 @@
+/**
+ * server/src/api/warehouse/suppliers.js - 供应商管理路由
+ *
+ * 路由：
+ *  GET    /api/warehouse/suppliers              - 获取供应商列表
+ *  POST   /api/warehouse/suppliers/create       - 新建供应商
+ *  PUT    /api/warehouse/suppliers/update       - 更新供应商信息
+ *  DELETE /api/warehouse/suppliers/delete/:name - 删除供应商
+ *
+ * 认证：需要管理员权限。
+ */
 import express from "express";
 import { validBody } from "../../middleware/validBody.js";
 import { throwError } from "../../middleware/handleError.js";

@@ -1,3 +1,8 @@
+/**
+ * @file CashCommodity.jsx
+ * @description 收银商品列表虚拟滚动展示组件，包含列配置和底部订单合计
+ * @module views/Home/Main/market/Cash/CashLeft/CashCommodity
+ */
 import React from "react";
 import styled from "../../../../../../styles/cash.scss";
 import { VirtualSelectList } from "../../../../../../components/VirtualSelectList";

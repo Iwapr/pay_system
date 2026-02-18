@@ -1,3 +1,8 @@
+/**
+ * @file LineCharts.jsx
+ * @description ECharts折线图封装组件，支持动态选项驱动并监听窗口大小自适应重绘
+ * @module views/Home/Main/home/common/LineCharts
+ */
 import React, { useEffect, useState } from "react";
 import echarts from "echarts/lib/echarts";
 import "echarts/lib/chart/line";

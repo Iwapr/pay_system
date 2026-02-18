@@ -1,3 +1,9 @@
+/**
+ * @file dahua.js
+ * @description 大华电子秤设备驱动类，实现将商品 PLU 信息转换为协议格式并通过 TCP Socket 发送至电子秤的功能。
+ * PLU 协议格式参考大华电子秤通信协议文档，包含商品代码、单价、区位码名称等字段。
+ * @module device/scale/dahua
+ */
 import { convertToZoneBitCode } from "chinese-to-zone-bit-code";
 import { PromiseSocket } from "../../tools/promiseSocket";
 

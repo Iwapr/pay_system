@@ -1,3 +1,8 @@
+/**
+ * @file index.jsx
+ * @description 应用顶部导航栏组件，包含侧边栏折叠按钮、店铺名称显示及用户操作区域
+ * @module views/Home/Header
+ */
 import React from "react";
 import { Layout, Icon, Typography, } from "antd";
 import styled from "../../../styles/header.scss";

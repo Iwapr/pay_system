@@ -1,3 +1,8 @@
+/**
+ * @file SetVip.jsx
+ * @description 收银会员设置弹窗，搜索并关联会员卡到当前订单以享受会员优惠
+ * @module views/Home/Main/market/Cash/Dialog/SetVip
+ */
 import React, { useState, useRef, useEffect } from "react";
 import { Modal, Input, message } from "antd";
 import { VirtualSelectList } from "../../../../../../components/VirtualSelectList";

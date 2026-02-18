@@ -1,3 +1,8 @@
+/**
+ * @file index.jsx
+ * @description 条码打印页面入口组件，整合商品选择、搜索与批量条码打印功能
+ * @module views/Home/Main/warehouse/BarcodePrint/index
+ */
 import React, { useMemo, useState } from "react";
 import { CommodityList } from "./CommodityList";
 import { SearchFn } from "./SearchFn";

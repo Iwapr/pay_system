@@ -1,3 +1,8 @@
+/**
+ * @file index.jsx
+ * @description 订单统计页面入口组件，整合时间筛选、订单列表与搜索操作功能
+ * @module views/Home/Main/statistics/orders/index
+ */
 import React, { useMemo, useState } from "react";
 import styled from "../../../../../styles/statistics/sales.scss";
 import { useTime } from "../hooks/useTime";

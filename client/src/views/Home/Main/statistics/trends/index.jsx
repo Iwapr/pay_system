@@ -1,3 +1,8 @@
+/**
+ * @file index.jsx
+ * @description 销售趋势统计页面，整合时间选择与折线图，展示销售数据的时间趋势
+ * @module views/Home/Main/statistics/trends/index
+ */
 import React, { useState, useEffect, useMemo } from "react";
 import styled from "../../../../../styles/statistics/sales.scss";
 import { useTime } from "../hooks/useTime";

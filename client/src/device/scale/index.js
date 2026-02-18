@@ -1,3 +1,9 @@
+/**
+ * @file index.js
+ * @description 电子秤设备列表导出模块，定义可用电子秤的连接配置（主机地址、端口、设备类）。
+ * 当前使用 WebFakeScale 作为 Web 演示版本的模拟实现，正式环境可切换为 DahuaScale。
+ * @module device/scale
+ */
 // import { DahuaScale } from "./dahua";
 import { WebFakeScale } from "./webFakeScale";
 

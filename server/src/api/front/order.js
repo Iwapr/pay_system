@@ -1,3 +1,14 @@
+/**
+ * server/src/api/front/order.js - 前台收银订单路由
+ *
+ * 路由：
+ *  POST /api/front/order/submit  - 提交收银订单（含验价、积分、促销逻辑）
+ *  GET  /api/front/order         - 获取今日历史订单列表
+ *  PUT  /api/front/order/undo    - 撤销已完成订单
+ *  PUT  /api/front/order/addvip  - 为已完成订单补录 VIP 信息
+ *
+ * 认证：需要有效的 JWT Token。
+ */
 import express from "express";
 import { throwError } from "../../middleware/handleError.js";
 import { validBody } from "../../middleware/validBody.js";

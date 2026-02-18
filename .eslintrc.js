@@ -1,3 +1,10 @@
+/**
+ * @file .eslintrc.js
+ * @description 项目 ESLint 代码规范配置文件。
+ * 启用 browser/es6/node 环境，继承 eslint:recommended 规则，
+ * 支持 JSX 语法，引入 react 插件并配置引号风格（双引号）和换行符（Unix LF）规则。
+ * @module eslintrc
+ */
 module.exports = {
     "env": {
         "browser": true,

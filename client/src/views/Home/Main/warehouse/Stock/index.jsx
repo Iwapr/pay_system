@@ -1,3 +1,8 @@
+/**
+ * @file index.jsx
+ * @description 进货管理页面入口组件，整合进货记录列表与进货单明细操作功能
+ * @module views/Home/Main/warehouse/Stock/index
+ */
 import React, { useState, useEffect } from "react";
 import styled from "../../../../../styles/warehouse/stock.scss";
 import { useAjax } from "../../../../AjaxProvider";

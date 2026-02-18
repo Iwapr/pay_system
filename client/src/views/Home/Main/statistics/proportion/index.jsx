@@ -1,3 +1,8 @@
+/**
+ * @file index.jsx
+ * @description 销售占比统计页面，整合时间选择与饼图，展示各类商品销售占比数据
+ * @module views/Home/Main/statistics/proportion/index
+ */
 import React, { useEffect, useState } from "react";
 import { useTime } from "../hooks/useTime";
 import styled from "../../../../../styles/statistics/sales.scss";

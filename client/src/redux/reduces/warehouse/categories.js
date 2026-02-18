@@ -1,3 +1,18 @@
+/**
+ * client/src/redux/reduces/warehouse/categories.js - 商品分类 Reducer
+ *
+ * 管理商品分类树的选择、展开、勾选状态，以及分类的增删改操作。
+ *
+ * State 结构：
+ *  {
+ *    tree:            Array       - 一棵展示用的分类树节点数据
+ *    categoryList:    Array       - 扁平化的分类节点数据（便于查找）
+ *    checkedKeys:     string[]    - 复选框选中的分类 key 列表
+ *    expandedKeys:    string[]    - 当前展开的分类 key 列表
+ *    selectKeys:      string[]    - 鼠标单击选中的分类 key（单选模式）
+ *    currentShowKeys: string[]    - 当前需要展示其下属商品的分类名称列表
+ *  }
+ */
 import {
     WARE_CATEGORY_SELECT,
     WARE_CATEGORY_EXPAND,

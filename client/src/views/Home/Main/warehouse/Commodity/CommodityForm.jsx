@@ -1,3 +1,8 @@
+/**
+ * @file CommodityForm.jsx
+ * @description 商品信息表单组件，支持新增和编辑商品名称、条码、分类和价格等详细信息
+ * @module views/Home/Main/warehouse/Commodity/CommodityForm
+ */
 import React, { useMemo, useState, useEffect } from "react";
 import { Drawer, Form, Input, Row, Col, Switch, Button, message } from "antd";
 import { useSelector, shallowEqual } from "react-redux";

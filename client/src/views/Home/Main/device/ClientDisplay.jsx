@@ -1,3 +1,8 @@
+/**
+ * @file ClientDisplay.jsx
+ * @description 客显设备配置表单，支持选择串口号和波特率并保存客显连接参数
+ * @module views/Home/Main/device/ClientDisplay
+ */
 import React from "react";
 import { useSerialport } from "../../../../hooks/useSerialport";
 import { Form, Select, Button, message } from "antd";

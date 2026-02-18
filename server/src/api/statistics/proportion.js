@@ -1,3 +1,11 @@
+/**
+ * server/src/api/statistics/proportion.js - 商品销售占比统计路由
+ *
+ * GET /api/statistics/proportion - 返回指定时间段内各商品的销售额占比，
+ * 支持按分类或商品维度（type 参数）统计。
+ *
+ * 认证：需要有效的 JWT Token。
+ */
 import express from "express";
 import { validBody } from "../../middleware/validBody.js";
 import { proportionSchema } from "../../schema/statistics.js";

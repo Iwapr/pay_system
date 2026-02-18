@@ -1,3 +1,8 @@
+/**
+ * @file VipList.jsx
+ * @description 会员列表展示组件，以虚拟滚动列表形式渲染会员数据及统计信息
+ * @module views/Home/Main/vip/VipList
+ */
 import React, { useMemo } from "react";
 import styled from "../../../../styles/vip.scss";
 import { VirtualSelectList } from "../../../../components/VirtualSelectList";

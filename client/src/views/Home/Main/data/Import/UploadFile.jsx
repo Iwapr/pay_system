@@ -1,3 +1,8 @@
+/**
+ * @file UploadFile.jsx
+ * @description 数据导入文件上传组件，支持xlsx文件拖拽上传并解析为结构化数据
+ * @module views/Home/Main/data/Import/UploadFile
+ */
 import React from "react";
 import * as XLSX from "xlsx";
 import { Upload, message, Icon, } from "antd";

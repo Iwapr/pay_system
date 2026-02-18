@@ -1,3 +1,12 @@
+/**
+ * server/src/tasks/frontend/vip_member.js - 前台会员查询数据操作层（DAO 封装）
+ *
+ * 封装前台收银台快速搜索会员的数据库操作。
+ * 支持按会员码/拼音首字母/姓名/手机号查询，自动过滤已禁用的会员。
+ *
+ * 方法列表：
+ *  - getVipMemberDetails(query): 多字段搜索未禁用的会员信息
+ */
 import AppDAO from "../../data/AppDAO.js";
 
 class VipMemberTask {

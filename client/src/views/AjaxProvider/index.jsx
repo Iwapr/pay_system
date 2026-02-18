@@ -1,3 +1,8 @@
+/**
+ * @file index.jsx
+ * @description Axios请求拦截器封装，提供全局Ajax请求上下文，自动注入Token并处理响应异常
+ * @module views/AjaxProvider
+ */
 import React, { createContext, useContext } from "react";
 import { useAuth } from "../AuthProvider";
 import axios from "axios";

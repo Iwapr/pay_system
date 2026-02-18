@@ -1,3 +1,8 @@
+/**
+ * @file PromotionList.jsx
+ * @description 促销活动列表展示组件，包含加载状态与虚拟滚动列表展示
+ * @module views/Home/Main/promotion/Manage/PromotionList
+ */
 import React, { useMemo } from "react";
 import styled from "../../../../../styles/promotion/manage.scss";
 import { LoadingBox } from "../../../../../components/LoadingBox";

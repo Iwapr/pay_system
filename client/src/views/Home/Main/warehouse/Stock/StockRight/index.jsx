@@ -1,3 +1,8 @@
+/**
+ * @file index.jsx
+ * @description 进货单右侧面板组件，整合进货商品明细列表与操作功能
+ * @module views/Home/Main/warehouse/Stock/StockRight/index
+ */
 import React, { useState } from "react";
 import styled from "../../../../../../styles/warehouse/stock.scss";
 import { StockCommodityList } from "./StockCommodityList";

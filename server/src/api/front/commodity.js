@@ -1,3 +1,11 @@
+/**
+ * server/src/api/front/commodity.js - 前台商品查询路由 GET /api/front/commodity/:key
+ *
+ * 收银台搜索商品接口，支持条形码精准查询和关键字模糊查询。
+ * warehouse 参数为 true 时返回更多仓库字段（用于仓库查询场景）。
+ *
+ * 认证：需要有效的 JWT Token。
+ */
 import express from "express";
 import { throwError } from "../../middleware/handleError.js";
 import CommodityTask from "../../tasks/frontend/commodity.js";

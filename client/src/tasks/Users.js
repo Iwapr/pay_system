@@ -1,3 +1,17 @@
+/**
+ * client/src/tasks/Users.js - 用户管理 API 调用封装
+ *
+ * 封装后台用户管理接口。
+ *
+ * 方法列表：
+ *  - changePwd(http, args):                    修改当前用户密码（带异常处理）POST /api/users/updatepwd
+ *  - getAllUser(ajax):                          获取所有用户列表             GET /api/users
+ *  - createUser(ajax, username, pwd, group):    创建新用户                  POST /api/users/createuser
+ *  - changeUsername(ajax, old, new):            修改用户名                  POST /api/users/updateusername
+ *  - changeUserPwd(ajax, username, pwd):        管理员重置用户密码           PUT  /api/users/updatepwd
+ *  - changeUserGroup(ajax, username, group):    修改用户组                  PUT  /api/users/updateusergroup
+ *  - changeUserStatus(ajax, username, status):  启用/禁用用户               PUT  /api/users/updateuserstatus
+ */
 class Users {
     static async changePwd(http, args) {
         // 修改用户密码

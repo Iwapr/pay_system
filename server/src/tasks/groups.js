@@ -1,3 +1,15 @@
+/**
+ * server/src/tasks/groups.js - 用户组数据操作层（DAO 封装）
+ *
+ * 封装对 groups 和 groups_authority 表的数据库操作。
+ *
+ * 方法列表：
+ *  - getAllGroup():                获取所有用户组及其完整权限信息
+ *  - getGroupAuthority(id, onlyID): 获取指定用户组的权限列表
+ *  - getGroupDetails(group):       按 ID 或名称查询用户组详情
+ *  - createGroup(group, authIDs):  创建新用户组并关联权限
+ *  - setGroupAuthority(gid, auth): 为用户组关联权限
+ */
 import AppDAO from "../data/AppDAO.js";
 import AuthorityTask from "./authority.js";
 

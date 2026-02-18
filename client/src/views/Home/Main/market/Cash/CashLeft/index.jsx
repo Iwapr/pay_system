@@ -1,3 +1,8 @@
+/**
+ * @file index.jsx
+ * @description 收银左侧区域容器，集成条码输入、商品列表及会员信息展示
+ * @module views/Home/Main/market/Cash/CashLeft
+ */
 import React from "react";
 import { Col } from "antd";
 import { BarcodeInputAndTotal } from "./BarcodeInputAndTotal";

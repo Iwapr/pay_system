@@ -1,3 +1,8 @@
+/**
+ * @file UserAvatar.jsx
+ * @description 顶部用户头像下拉菜单组件，提供修改密码和退出登录功能
+ * @module views/Home/Header/UserAvatar
+ */
 import React, { useState } from "react";
 import { Icon, Dropdown, Menu, Avatar, Modal, message, Form, Input, message as antdMessage } from "antd";
 import { Users } from "../../../tasks/Users";

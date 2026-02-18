@@ -1,3 +1,8 @@
+/**
+ * @file StockCommodityList.jsx
+ * @description 进货单商品明细列表组件，管理单次进货的商品条目增删改查
+ * @module views/Home/Main/warehouse/Stock/StockRight/StockCommodityList
+ */
 import React, { useMemo } from "react";
 import styled from "../../../../../../styles/warehouse/stock.scss";
 import { useSelector, useDispatch } from "react-redux";

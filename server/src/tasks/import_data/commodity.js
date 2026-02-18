@@ -1,3 +1,9 @@
+/**
+ * server/src/tasks/import_data/commodity.js - 商品数据批量导入层
+ *
+ * 封装从 Excel/JSON 数据源批量导入商品到数据库的操作。
+ * 处理分类/供应商的名称到 ID 的映射，以及重复条形码检测。
+ */
 import SupplierManage from "../suppliers.js";
 import CategoryManage from "../categories.js";
 import CommodityTask from "../commodity.js";

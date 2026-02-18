@@ -1,6 +1,18 @@
+/**
+ * server/src/schema/vip_member.js - 会员请求参数验证 Schema
+ *
+ * 使用 Joi 定义 VIP 会员相关接口的输入验证规则。
+ * 会员码: 4-10 位数字，姓名: 1-10 个字符，性别: 男/女。
+ *
+ * 导出内容：
+ *  - setVipPointSchema:        设置积分字段验证
+ *  - setVipPointRuleSchema:    设置积分规则验证
+ *  - createVipMemberSchema:    创建会员验证
+ *  - updateVipMemberSchema:    更新会员验证
+ *  - deleteVipMemberSchema:    删除会员验证
+ *  - changeVipMemberSchema:    换卡验证
+ */
 import Joi from "@hapi/joi";
-
-export const code = Joi.string().regex(/^\d{4,10}$/);
 export const name = Joi.string().min(1).max(10);
 export const vip_type = Joi.string().min(1).max(10);
 export const sex = Joi.string().regex(/^[男女]$/);

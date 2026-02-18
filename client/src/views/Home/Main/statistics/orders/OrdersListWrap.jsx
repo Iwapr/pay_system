@@ -1,3 +1,8 @@
+/**
+ * @file OrdersListWrap.jsx
+ * @description 订单列表容器组件，整合订单列表与详情面板，实现点击订单联动展示明细
+ * @module views/Home/Main/statistics/orders/OrdersListWrap
+ */
 import React, { useMemo, useEffect } from "react";
 import styled from "../../../../../styles/statistics/sales.scss";
 import { OrderList } from "./OrderList";

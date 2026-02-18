@@ -1,3 +1,15 @@
+/**
+ * server/src/api/warehouse/categories.js - 仓库商品分类管理路由
+ *
+ * 路由：
+ *  GET    /api/warehouse/categories                    - 获取所有分类（树形结构）
+ *  PUT    /api/warehouse/categories/updatename         - 重命名分类
+ *  PUT    /api/warehouse/categories/updateparent       - 修改父分类
+ *  POST   /api/warehouse/categories/create             - 创建分类（支持子分类）
+ *  DELETE /api/warehouse/categories/delete/:name       - 删除分类
+ *
+ * 认证：需要管理员权限。
+ */
 import express from "express";
 import { throwError } from "../../middleware/handleError.js";
 import { validBody } from "../../middleware/validBody.js";

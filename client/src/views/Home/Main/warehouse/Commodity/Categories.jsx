@@ -1,3 +1,8 @@
+/**
+ * @file Categories.jsx
+ * @description 商品分类管理组件，支持树形结构的分类增删改查和拖拽排序
+ * @module views/Home/Main/warehouse/Commodity/Categories
+ */
 import React, { useState, useEffect, useMemo } from "react";
 import styled from "../../../../../styles/warehouse/commodity.scss";
 import { Tree, Icon, Modal, Form, Input, message, TreeSelect } from "antd";

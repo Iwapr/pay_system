@@ -1,3 +1,8 @@
+/**
+ * @file TabsProvider.jsx
+ * @description 标签页状态管理 Provider，基于 Redux 提供标签页的开关、关闭与上下文操作
+ * @module views/Home/TabsProvider
+ */
 import React, { createContext, useContext, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {

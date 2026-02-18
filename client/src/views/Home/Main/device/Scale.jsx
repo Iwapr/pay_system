@@ -1,3 +1,8 @@
+/**
+ * @file Scale.jsx
+ * @description 电子秤设备配置组件，支持选型、IP端口配置及商品分类同步
+ * @module views/Home/Main/device/Scale
+ */
 import React, { useEffect, useState } from "react";
 import { Form, Input, InputNumber, Select, Button, Progress, message } from "antd";
 import { useAjax } from "../../../AjaxProvider";

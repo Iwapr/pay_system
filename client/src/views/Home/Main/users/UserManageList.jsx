@@ -1,3 +1,8 @@
+/**
+ * @file UserManageList.jsx
+ * @description 员工管理列表组件，以虚拟滚动列表形式展示员工账号信息
+ * @module views/Home/Main/users/UserManageList
+ */
 import React, { useMemo } from "react";
 import styled from "../../../../styles/users.scss";
 import { VirtualSelectList } from "../../../../components/VirtualSelectList";

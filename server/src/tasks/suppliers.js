@@ -1,3 +1,14 @@
+/**
+ * server/src/tasks/suppliers.js - 供应商数据操作层（DAO 封装）
+ *
+ * 封装对 suppliers 表的 CRUD 操作。
+ *
+ * 方法列表：
+ *  - getSupplierDetails(arg):            按 ID 或名称查询供应商，无参则获取全部
+ *  - createSupplier(name, phone, desc):  新建供应商
+ *  - updateSupplier(name, value):        更新供应商信息
+ *  - deleteSupplier(name):              删除供应商
+ */
 import AppDAO from "../data/AppDAO.js";
 
 class SuppliersTask {

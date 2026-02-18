@@ -1,3 +1,8 @@
+/**
+ * @file LineCharts.jsx
+ * @description 销售趋势折线图组件，基于 ECharts 渲染销售金额随时间变化的走势图表
+ * @module views/Home/Main/statistics/trends/LineCharts
+ */
 import React, { useState, useEffect } from "react";
 import styled from "../../../../../styles/statistics/sales.scss";
 import echarts from "echarts/lib/echarts";

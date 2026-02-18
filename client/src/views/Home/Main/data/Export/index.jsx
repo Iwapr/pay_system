@@ -1,3 +1,8 @@
+/**
+ * @file index.jsx
+ * @description 数据导出功能主入口，分步骤选择导出类型和文件格式并生成下载
+ * @module views/Home/Main/data/Export
+ */
 import React, { useState, useMemo } from "react";
 import styled from "../../../../../styles/data/export.scss";
 import { Steps, Icon, Button } from "antd";

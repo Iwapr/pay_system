@@ -1,3 +1,17 @@
+/**
+ * server/src/tasks/categories.js - 商品分类数据操作层（DAO 封装）
+ *
+ * 封装对 categories 表的 CRUD 操作。
+ * 支持多层分类（通过 parent_id）。
+ *
+ * 方法列表：
+ *  - createCategory(name, parent):     创建分类（可指定父分类）
+ *  - getCategoryDetails(arg):          按 ID 或名称查询分类详情
+ *  - getAllCategories():               获取所有分类
+ *  - updateCategoryName(old, new):     重命名分类
+ *  - deleteCategory(name):            删除分类（同步删除子分类和商品关联）
+ *  - updateCategoryParent(name, parent): 修改分类的父分类
+ */
 import AppDAO from "../data/AppDAO.js";
 
 class CategoriesTask {

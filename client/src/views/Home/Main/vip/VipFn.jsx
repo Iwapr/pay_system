@@ -1,3 +1,8 @@
+/**
+ * @file VipFn.jsx
+ * @description 会员管理操作栏组件，提供会员搜索、新增会员及导出会员数据功能
+ * @module views/Home/Main/vip/VipFn
+ */
 import React, { useState } from "react";
 import styled from "../../../../styles/vip.scss";
 import { Button, Input } from "antd";

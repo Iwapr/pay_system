@@ -1,3 +1,8 @@
+/**
+ * @file TypeConfig.jsx
+ * @description 数据导出类型与文件格式（xlsx/json）单选配置表单组件
+ * @module views/Home/Main/data/Export/TypeConfig
+ */
 import React from "react";
 import { Form, Radio } from "antd";
 

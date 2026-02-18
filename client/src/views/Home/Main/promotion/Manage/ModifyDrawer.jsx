@@ -1,3 +1,8 @@
+/**
+ * @file ModifyDrawer.jsx
+ * @description 促销活动新建或修改抄屉，配置活动名称、时间范围和备注信息
+ * @module views/Home/Main/promotion/Manage/ModifyDrawer
+ */
 import React, { useMemo } from "react";
 import moment from "moment";
 import { Drawer, Form, Input, DatePicker, Button, message } from "antd";

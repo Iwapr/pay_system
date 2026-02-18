@@ -1,3 +1,8 @@
+/**
+ * @file TrendsFn.jsx
+ * @description 销售趋势操作栏组件，提供按员工或商品维度切换查看销售趋势的选择功能
+ * @module views/Home/Main/statistics/trends/TrendsFn
+ */
 import React from "react";
 import styled from "../../../../../styles/statistics/sales.scss";
 import { Select } from "antd";

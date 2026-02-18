@@ -1,3 +1,27 @@
+/**
+ * client/src/components/VirtualSelectList.jsx - 虚拟滚动列表组件
+ *
+ * 提供高性能的虚拟滚动商品/数据列表，仅渲染可见区域的行。
+ * 适用于大量数据的展示场景，避免一次性渲染全部 DOM 导致性能问题。
+ *
+ * 导出内容：
+ *  - useSelect():            自定义 Hook，管理列表的选中状态（selectId + selectType）
+ *  - VirtualSelectList:      虚拟滚动列表组件
+ *
+ * VirtualSelectList Props：
+ *  @param {Array}    columns         - 列定义 [{key, title, type, center, width?}]
+ *  @param {Array}    data            - 数据列表（全量）
+ *  @param {number}   itemHeight      - 每行高度（px）
+ *  @param {object}   select          - 选中状态 {selectId, selectType}
+ *  @param {Function} setSelectData   - 更新选中状态的函数
+ *  @param {string}   selectFields    - 用于识别选中项的字段名（默认 "id"）
+ *  @param {Function} handleColumnCss - 自定义行 CSS 的回调函数
+ *
+ * 实现逻辑：
+ *  - 监听容器滚动位置，动态计算需要渲染的起始/结束行索引
+ *  - 使用 CSS transform translateY 实现不修改 DOM 顺序的虚拟滚动
+ *  - 键盘上下箭头滚动支持（通过 tabIndex 获焦后监听 keydown）
+ */
 import React, { useRef, useEffect, useState, useCallback } from "react";
 import styled from "../styles/components/virtual-select-list.scss";
 import { useMemo } from "react";

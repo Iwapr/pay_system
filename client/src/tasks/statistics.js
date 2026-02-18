@@ -1,3 +1,15 @@
+/**
+ * client/src/tasks/statistics.js - 统计分析 API 调用封装
+ *
+ * 封装统计报表相关接口。
+ *
+ * 方法列表：
+ *  - getOrderList(ajax, timerange):                    按时间范围获取订单列表
+ *  - getOrderDetails(ajax, orderid):                   按订单号查询订单详情
+ *  - queryOrderDetailsByKey(ajax, params):             多条件查询订单
+ *  - queryCommoditySalesProportionByTime(ajax, range, type): 商品销售占比统计
+ *  - querySalesTrends(ajax, range, type):              门店销售趋势统计
+ */
 export class StatisticsTasks {
     static getOrderList(ajax, timerange) {
         // 使用时间范围获取订单详情

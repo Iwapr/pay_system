@@ -1,3 +1,8 @@
+/**
+ * @file useCommodity.jsx
+ * @description 促销活动商品数据管理自定义 Hook，提供参与促销商品信息的加载与搜索功能
+ * @module views/Home/Main/promotion/useCommodity
+ */
 import { useState, useEffect } from "react";
 import { PromotionManage } from "../../../../tasks/promotion";
 

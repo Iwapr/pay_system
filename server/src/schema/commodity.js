@@ -1,3 +1,23 @@
+/**
+ * server/src/schema/commodity.js - 商品请求参数验证 Schema
+ *
+ * 使用 Joi 定义商品相关接口的输入验证规则。
+ *
+ * 导出的基础字段验证（供其他 schema 引用）：
+ *  - barcode:      条形码 (1-40 字符)
+ *  - name:         商品名称 (1-50 字符)
+ *  - unit:         单位 (1-10 字符)
+ *  - size:         詳细规格 (1-30 字符)
+ *  - in_price:     进货价 (0-1000000)
+ *  - sale_price:   销售价 (0-1000000)
+ *  - vip_points:   是否百积分 (boolean)
+ *  - is_delete:    是否软删除 (boolean)
+ *
+ * 导出的 Schema：
+ *  - createCommoditySchema:  创建商品验证
+ *  - updateCommoditySchema:  更新商品验证
+ *  - deleteCommoditySchema:  删除商品验证
+ */
 import Joi from "@hapi/joi";
 import { categoryNameReq, categoryName } from "./categories.js";
 import { name as supplier_name } from "./suppliers.js";

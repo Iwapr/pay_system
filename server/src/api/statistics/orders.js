@@ -1,3 +1,12 @@
+/**
+ * server/src/api/statistics/orders.js - 订单统计路由
+ *
+ * GET  /api/statistics/orders         - 按时间范围查询订单列表
+ * GET  /api/statistics/orders/:id     - 查询单条订单详情（含商品明细）
+ * GET  /api/statistics/orders/query   - 多条件模糊查询订单
+ *
+ * 认证：需要有效的 JWT Token。
+ */
 import express from "express";
 import { ordersSchema, queryOrdersSchema } from "../../schema/statistics.js";
 import { validBody } from "../../middleware/validBody.js";

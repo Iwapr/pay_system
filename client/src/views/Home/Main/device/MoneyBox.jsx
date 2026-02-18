@@ -1,3 +1,8 @@
+/**
+ * @file MoneyBox.jsx
+ * @description 錢笱设备配置表单，设置结账时是否自动弹出錢笱并保存配置
+ * @module views/Home/Main/device/MoneyBox
+ */
 import React, { useMemo } from "react";
 import { Form, message, Button, Radio } from "antd";
 import { MoneyBoxConfig } from "../../../../device/money_box";

@@ -1,3 +1,8 @@
+/**
+ * @file StockList.jsx
+ * @description 进货记录列表组件，展示历史进货单据信息并支持选中查看详情
+ * @module views/Home/Main/warehouse/Stock/StockList
+ */
 import React, { useMemo } from "react";
 import styled from "../../../../../styles/warehouse/stock.scss";
 import { VirtualSelectList } from "../../../../../components/VirtualSelectList";

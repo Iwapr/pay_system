@@ -1,3 +1,8 @@
+/**
+ * @file SelectCommodity.jsx
+ * @description 收银商品选择弹窗，展示同名商品列表供用户选择确认入单
+ * @module views/Home/Main/market/Cash/Dialog/SelectCommodity
+ */
 import React from "react";
 import { Modal, message } from "antd";
 import styled from "../../../../../../styles/cash.scss";

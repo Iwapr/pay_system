@@ -1,3 +1,24 @@
+/**
+ * client/src/redux/reduces/cash.js - 收銀模块 Reducer
+ *
+ * 管理前台收銀和历史订单相关的全部状态。
+ * 包含三个子 Reducer：
+ *
+ *  currentOrder  - 当前正在进行中的订单（商品列表、选中商品、VIP 信息）
+ *  historyOrder  - 已完成的订单列表（支持撤销、追加 VIP）
+ *  hangupOrder   - 挂起（智能挂单）的订单列表
+ *
+ * 商品单条结构：
+ *  {
+ *    id:         number    - 订单内唯一 ID（自增）
+ *    name:       string    - 商品名称
+ *    barcode:    string    - 条形码
+ *    sale_price: number    - 当前单价（可被修改）
+ *    count:      number    - 数量
+ *    money:      number    - 小计金额（count * sale_price）
+ *    status:     "" | "赠送" | "退货" - 商品状态
+ *  }
+ */
 import { combineReducers } from "redux";
 import {
     CASH_HOTKEY_STATUS,
@@ -25,8 +46,13 @@ import { getFormatTime } from "../../tools/time";
 
 const { GLOBAL_CASH_HOTKEY_SHOW } = config;
 
+// 从 localStorage 读取热键显示偏好，默认显示
 const cashHotKeyInitStatus = localStorage.getItem(GLOBAL_CASH_HOTKEY_SHOW) === "hide" ? false : true;
 
+/**
+ * showCashHotKey Reducer
+ * 管理收銀页面左侧热键和快捷商品面板的显示/隐藏状态
+ */
 export function showCashHotKey(state = cashHotKeyInitStatus, action) {
 
     switch (action.type) {
@@ -37,16 +63,34 @@ export function showCashHotKey(state = cashHotKeyInitStatus, action) {
     }
 }
 
+/** 订单初始状态 */
 const orderInit = {
-    id: 0,
+    id: 0,              // 最后一个商品的 ID
     select: {
-        type: "origin",
-        id: 0
+        type: "origin", // 选中类型："origin"普通选中 / "更改价格"等
+        id: 0           // 选中的商品 ID
     },
-    vip: {},
-    commodityList: []
+    vip: {},            // VIP 信息，未绑定时为空对象
+    commodityList: []   // 商品列表
 }
 
+/**
+ * currentOrder Reducer - 当前正在进行中的订单
+ *
+ * 支持的 Action：
+ *  - CASH_HISTORY_ORDER_IMPORT: 将历史订单商品导入当前订单
+ *  - CASH_ORDER_ADD_COMMODITY:  新增商品（默认数量 1）
+ *  - CASH_ORDER_DELETE_COMMODITY: 删除商品，并自动调整选中状态
+ *  - CASH_ORDER_SET_SELECT_COMMODITY: 设置选中商品
+ *  - CASH_ORDER_SET_COMMODITY_COUNT: 修改商品数量，并重算 money
+ *  - CASH_ORDER_SET_COMMODITY_PRICE: 修改商品单价，并重算 money
+ *  - CASH_ORDER_SET_COMMODITY_STATUS_GIVE:   设置赠送状态（金额=0）
+ *  - CASH_ORDER_SET_COMMODITY_STATUS_RETURN: 设置退货状态（金额为负）
+ *  - CASH_ORDER_SET_VIP:   绑定 VIP
+ *  - CASH_ORDER_CLEAR_VIP: 解绑 VIP
+ *  - CASH_ORDER_RESET_STATUS / CASH_ORDER_HANGUP: 重置订单
+ *  - CASH_ORDER_HANGWUP_GET: 导入挂起的订单
+ */
 function currentOrder(state = orderInit, action) {
 
     switch (action.type) {
@@ -229,14 +273,24 @@ function currentOrder(state = orderInit, action) {
 
 
 
+/**
+ * historyOrder Reducer - 已完成订单列表
+ *
+ * State: Array<Order>
+ *  - CASH_HISTORY_ORDER_INIT:   初始化（登录后从服务器加载当日历史订单）
+ *  - CASH_HISTORY_ORDER_ADD:    新增订单（结账后添加）
+ *  - CASH_HISTORY_ORDER_UNDO:   撤销订单（用服务器最新数据替换）
+ *  - CASH_HISTORY_ORDER_ADDVIP: 为历史订单追加 VIP 信息
+ */
 function historyOrder(state = [], action) {
     switch (action.type) {
         case CASH_HISTORY_ORDER_INIT:
-            return action.data;
+            return action.data;  // 从服务器获取当日订单历史初始化
         case CASH_HISTORY_ORDER_ADD:
-            return [...state, action.order];
+            return [...state, action.order];  // 新订单追加到列表末尾
         case CASH_HISTORY_ORDER_UNDO:
         case CASH_HISTORY_ORDER_ADDVIP:
+            // 找到对应订单并用服务器返回的数据替换
             return state.map(order => {
                 if (order.order_id === action.data.order_id) {
                     return action.data;
@@ -248,15 +302,26 @@ function historyOrder(state = [], action) {
     }
 }
 
+/**
+ * hangupOrder Reducer - 挂起订单列表
+ *
+ * State: { id: number, list: Array<HangupOrder> }
+ * 每条挂起订单包含：
+ *  { id, order_id, vip, commodityList, time }
+ *
+ *  - CASH_ORDER_HANGUP:     将当前订单挂起，并取得一个新的挂起 ID
+ *  - CASH_ORDER_HANGWUP_GET: 取出指定 ID 的挂起订单，将其从列表中移除
+ */
 const hangupInitState = {
-    id: 0,
-    list: []
+    id: 0,    // 挂起订单自增 ID 计数器
+    list: []  // 挂起订单列表
 };
 
 function hangupOrder(state = hangupInitState, action) {
 
     switch (action.type) {
         case CASH_ORDER_HANGUP:
+            // 将当前订单加入挂起列表，并为其分配新 ID
             return {
                 id: state.id + 1,
                 list: [...state.list, {
@@ -264,10 +329,11 @@ function hangupOrder(state = hangupInitState, action) {
                     order_id: action.data.id,
                     vip: action.data.vip,
                     commodityList: action.data.commodityList,
-                    time: getFormatTime()
+                    time: getFormatTime()  // 记录挂起时间
                 }]
             };
         case CASH_ORDER_HANGWUP_GET:
+            // 取出指定 ID 的挂起订单，将其从列表中移除
             return {
                 ...state,
                 list: state.list.filter(({ id }) => id !== action.id)
@@ -277,8 +343,9 @@ function hangupOrder(state = hangupInitState, action) {
     }
 }
 
+/** 将三个子 Reducer 合并导出 */
 export const cash = combineReducers({
-    currentOrder,
-    historyOrder,
-    hangupOrder
+    currentOrder,   // 当前订单
+    historyOrder,   // 历史订单
+    hangupOrder     // 挂起订单
 });

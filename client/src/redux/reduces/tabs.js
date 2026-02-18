@@ -1,3 +1,15 @@
+/**
+ * client/src/redux/reduces/tabs.js - 标签页模块 Reducer
+ *
+ * showTabs  - 控制标签栏的显示/隐藏，状态持久化到 localStorage
+ * tabs      - 纺管多标签页的开示和切换
+ *
+ * State 结构：
+ *  {
+ *    currentPath: string         - 当前激活标签页的路径
+ *    openTabs: [{ path, title }] - 已打开的标签页列表（首页为默认不可关闭）
+ *  }
+ */
 import {
     TABS_ADD_TAB,
     TABS_CLOSE_TAB,
@@ -9,8 +21,13 @@ import config from "../../config";
 
 const { GLOBAL_TABS_STATUS } = config;
 
+// 从 localStorage 读取标签栏显示偏好，默认显示
 const defaultTabsStatus = localStorage.getItem(GLOBAL_TABS_STATUS) === "hide" ? false : true;
 
+/**
+ * showTabs Reducer
+ * 控制页面顶部标签栏的展开/折叠状态
+ */
 export function showTabs(state = defaultTabsStatus, action) {
     switch (action.type) {
         case TOGGLE_TABS_STATUS:
@@ -20,6 +37,7 @@ export function showTabs(state = defaultTabsStatus, action) {
     }
 }
 
+// 开发调试用的预设标签页列表（生产环境下已被注释）
 const fakeopenTabs = [
     {
         path: '/home',
@@ -51,9 +69,10 @@ const fakeopenTabs = [
     }
 ];
 
+/** 初始状态：默认打开首页 */
 const initValue = {
     currentPath: "/home",
-    // openTabs: fakeopenTabs
+    // openTabs: fakeopenTabs  // 调试时可启用预置多标签
     openTabs: [
         {
             path: "/home",
@@ -62,18 +81,24 @@ const initValue = {
     ]
 };
 
+/**
+ * tabs Reducer
+ * 理厂标签页的新增、切换和关闭操作
+ */
 export function tabs(state = initValue, action) {
     const { currentPath, openTabs } = state;
     switch (action.type) {
         case CLEAR_USER_STATE:
-            // 如果用户退出登录则恢复初始化值
+            // 用户退出登录时针标签页状态重置为初始状态
             return initValue;
         case TABS_SET_CURRENT_TAB:
+            // 仅切换激活标签，不修改标签列表
             return {
                 currentPath: action.path,
                 openTabs
             };
         case TABS_ADD_TAB:
+            // 添加新标签并切换到它
             return {
                 currentPath: action.value.path,
                 openTabs: [...openTabs, action.value]
@@ -82,23 +107,23 @@ export function tabs(state = initValue, action) {
             return (() => {
                 const { path } = action;
                 if (path === currentPath) {
-                    // 如果要关闭的是当前tab
+                    // 关闭的是当前激活标签，需要自动切换到相邻标签
                     const index = openTabs.findIndex(t => t.path === path);
                     if (index + 1 === openTabs.length) {
-                        // 如果要关闭的tab是最后一个tab，那么切换当前tab到前一个tab
+                        // 关闭的是最后一个标签，切换到前一个
                         return {
                             currentPath: openTabs[openTabs.length - 2].path,
                             openTabs: openTabs.slice(0, index)
                         };
                     } else {
-                        // 如果要关闭的tab后面还有tab，那么切换当前tab为下一个tab
+                        // 关闭的标签后面还有标签，切换到下一个
                         return {
                             currentPath: openTabs[index + 1].path,
                             openTabs: openTabs.filter(t => t.path !== path)
                         }
                     }
                 } else {
-                    // 如果关闭的不是当前tab
+                    // 关闭的是非激活标签，直接移除，不改变当前扰活标签
                     return {
                         currentPath,
                         openTabs: openTabs.filter(t => t.path !== path)

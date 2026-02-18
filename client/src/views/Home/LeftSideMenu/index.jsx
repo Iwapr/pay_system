@@ -1,3 +1,8 @@
+/**
+ * @file index.jsx
+ * @description 左侧导航菜单组件，根据用户权限动态渲染菜单项并与多标签路由联动
+ * @module views/Home/LeftSideMenu
+ */
 import React, { useEffect } from "react";
 import { Layout, Menu, Icon } from "antd";
 import { menus, menuValue } from "../menus";

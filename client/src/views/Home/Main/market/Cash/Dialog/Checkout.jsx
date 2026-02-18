@@ -1,3 +1,8 @@
+/**
+ * @file Checkout.jsx
+ * @description 结账弹窗组件，支持多种支付方式、自动打印小票和自动开錢笱
+ * @module views/Home/Main/market/Cash/Dialog/Checkout
+ */
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useAjax } from "../../../../../AjaxProvider";

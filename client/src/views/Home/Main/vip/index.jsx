@@ -1,3 +1,8 @@
+/**
+ * @file index.jsx
+ * @description 会员管理页面入口组件，整合会员列表、表单操作与积分管理等核心功能
+ * @module views/Home/Main/vip/index
+ */
 import React, { useState, useEffect } from "react";
 import styled from "../../../../styles/vip.scss";
 import { VipFn } from "./VipFn";

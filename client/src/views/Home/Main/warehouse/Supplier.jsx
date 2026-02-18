@@ -1,3 +1,8 @@
+/**
+ * @file Supplier.jsx
+ * @description 供应商管理页面组件，支持供应商的增删改查、列表展示与搜索功能
+ * @module views/Home/Main/warehouse/Supplier
+ */
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import { useAjax } from "../../../AjaxProvider";
 import styled from "../../../../styles/warehouse/supplier.scss";

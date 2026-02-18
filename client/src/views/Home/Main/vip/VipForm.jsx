@@ -1,3 +1,8 @@
+/**
+ * @file VipForm.jsx
+ * @description 会员信息表单组件，支持新增和编辑会员姓名、电话、等级、积分等详细信息
+ * @module views/Home/Main/vip/VipForm
+ */
 import React, { useEffect, useState } from "react";
 import { Drawer, Form, Radio, Input, Button, Switch, message } from "antd";
 import styled from "../../../../styles/vip.scss";

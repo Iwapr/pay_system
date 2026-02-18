@@ -1,3 +1,8 @@
+/**
+ * @file CommodityList.jsx
+ * @description 商品管理列表组件，以虚拟滚动列表展示商品数据并支持选中操作
+ * @module views/Home/Main/warehouse/Commodity/CommodityList
+ */
 import React, { useMemo, useCallback } from "react";
 import styled from "../../../../../styles/warehouse/commodity.scss";
 import { VirtualSelectList } from "../../../../../components/VirtualSelectList";

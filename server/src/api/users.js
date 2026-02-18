@@ -1,3 +1,14 @@
+/**
+ * server/src/api/users.js - 用户管理接口
+ *
+ * 路由列表（均需要 auth 中间件）：
+ *  PUT  /api/users/updatepwd        - 修改用户密码（本人或管理员可操作）
+ *  GET  /api/users/                 - 获取所有用户（需管理员权限）
+ *  PUT  /api/users/updateusergroup  - 修改用户所属用户组（需管理员权限）
+ *  POST /api/users/updateusername   - 修改用户名（需管理员权限）
+ *  POST /api/users/createuser       - 创建新用户（需管理员权限）
+ *  PUT  /api/users/updateuserstatus - 禁用/启用用户（需管理员权限）
+ */
 import express from "express";
 import admin, { validateAdmin } from "../middleware/admin.js";
 import UsersTask from "../tasks/users.js";

@@ -1,3 +1,19 @@
+/**
+ * server/src/tasks/commodity.js - 商品数据操作层（DAO 封装）
+ *
+ * 封装对 commodity 表的完整 CRUD 操作，包括：
+ * 分类/供应商 ID ↔ 名称的互相映射、拼音首字母搜索，
+ * 以及软删除逻辑（is_delete 字段）。
+ *
+ * 方法列表：
+ *  - mapCommdityCateSupp(list):          将商品列表的分类/供应商 ID 替换为名称
+ *  - mapCommdityCateIDToName(list):      仅映射分类 ID 到名称
+ *  - getCommodityDetails(arg, type):    按条码/名称/分类等查询商品详情
+ *  - createCommodity(data):             新增商品
+ *  - deleteCommodity(barcode):          软删除商品
+ *  - updateCommodity(barcode, value):   更新商品信息
+ *  - getBarcodeOrCreate(barcode):       查找或自动生成条形码
+ */
 import AppDAO from "../data/AppDAO.js";
 import CategoriesTask from "./categories.js";
 import config from "../config/index.js";

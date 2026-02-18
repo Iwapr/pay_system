@@ -1,3 +1,8 @@
+/**
+ * @file FieldsConfig.jsx
+ * @description 数据导入字段映射配置组件，支持选择导入字段对应关系及导入规则
+ * @module views/Home/Main/data/Import/FieldsConfig
+ */
 import React, { useMemo } from "react";
 import styled from "../../../../../styles/data/import.scss";
 import { Select, Form, Radio, Col } from "antd";

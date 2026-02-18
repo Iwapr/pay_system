@@ -1,3 +1,8 @@
+/**
+ * @file index.jsx
+ * @description 会员设置页面，整合会员等级规则、积分规则与积分衍发配置的管理功能
+ * @module views/Home/Main/vip/Setting/index
+ */
 import React, { useState } from "react";
 import { Card } from "antd";
 import { useAjax } from "../../../../AjaxProvider";

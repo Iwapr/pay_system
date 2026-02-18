@@ -1,3 +1,11 @@
+/**
+ * server/src/api/auth/token.js - Token 验证路由 GET /api/token/auth
+ *
+ * 功能：验证当前 JWT Token 是否有效，并返回店铺名称。
+ * 通常在应用启动时由客户端调用以快速恢复登录态。
+ *
+ * 认证：需要有效的 JWT Token（通过 validToken 中间件）。
+ */
 import express from "express";
 import { validToken } from "../../middleware/auth.js";
 import { throwError } from "../../middleware/handleError.js";

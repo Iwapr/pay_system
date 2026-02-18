@@ -1,3 +1,14 @@
+/**
+ * server/src/tasks/frontend/commodity.js - 前台商品查询数据操作层（DAO 封装）
+ *
+ * 封装前台收银场景的商品查询，区别于仓库管理场景。
+ * 支持条码精准查询、拼音首字母模糊搜索和名称模糊搜索。
+ * 查询结果自动叠加当前有效的促销价格。
+ *
+ * 方法列表：
+ *  - getCommodityDetails(query, warehouse): 多字段组合搜索商品
+ *  - applyPromotionPrice(list):            为结果叠加促销折扣价
+ */
 import AppDAO from "../../data/AppDAO.js";
 import PromotionTask from "../market/promotion.js";
 import { mathc } from "../../lib/mathc.js";

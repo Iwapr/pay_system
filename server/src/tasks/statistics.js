@@ -1,3 +1,16 @@
+/**
+ * server/src/tasks/statistics.js - 统计分析数据处理层
+ *
+ * 聚合多个 DAO 的数据，提供各类统计查询服务：
+ * 订单列表、销售趋势、商品占比、每日/周/月汇总等。
+ *
+ * 方法列表：
+ *  - queryOrdersByTime(start, end):              按时间范围查询订单（含用户信息）
+ *  - getOrderDetails(order_id):                  查询单条订单详情（含商品明细）
+ *  - queryOrderByKeywords(params):               多条件查询订单
+ *  - getCategoryProportionByTime(start, end, types): 商品分类销售占比
+ *  - getSalesTrends(start, end, type):           销售趋势（hour/day/month）
+ */
 // import AppDAO from "../data/AppDAO.js";
 import UserTasks from "./users.js";
 import OrdersTasks from "./frontend/orders.js";

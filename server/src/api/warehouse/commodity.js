@@ -1,3 +1,14 @@
+/**
+ * server/src/api/warehouse/commodity.js - 仓库商品管理路由
+ *
+ * 路由：
+ *  GET    /api/warehouse/commodity              - 按分类查询商品列表
+ *  POST   /api/warehouse/commodity/create       - 新建商品
+ *  PUT    /api/warehouse/commodity/update       - 更新商品信息
+ *  DELETE /api/warehouse/commodity/delete/:barcode - 软删除商品
+ *
+ * 认证：需要管理员权限。
+ */
 import express from "express";
 import { throwError } from "../../middleware/handleError.js";
 import { validBody } from "../../middleware/validBody.js";

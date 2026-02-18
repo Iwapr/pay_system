@@ -1,3 +1,20 @@
+/**
+ * client/src/redux/action/index.js - Redux Action Creators
+ *
+ * 导出所有 Action 创建函数，供组件和业务逻辑调用。
+ * 每个函数返回一个包含 `type` 字段的 Action 对象，
+ * 该 type 对应 actionType.js 中定义的常量。
+ *
+ * 模块分类：
+ *  - 用户/登录:  setApiUrlAction, setUserDetailsAction, setUserIsLoginAction 等
+ *  - 标签页管理: openTabAction, closeTabAction, toggleTabAction 等
+ *  - 收银订单:   addCommodityToOrderAction, deleteCommodityFromOrderAction 等
+ *  - 历史订单:   initCashHistoryOrderAction, addOrderToHistoryAction 等
+ *  - 挂起订单:   hangupOrderAction, getHangupOrderAction
+ *  - 仓库/分类:  setCategoryInitTreeAction, createCategoryAction 等
+ *  - 仓库/商品:  setWareSelectCommodityAction, createWareCommodityAction 等
+ *  - 仓库/进货:  initWareStockAction, addWareStockAction 等
+ */
 import {
     LOGIN_SET_API_URL,
     LOGIN_SET_CURRENT_USERNAME,

@@ -1,3 +1,8 @@
+/**
+ * @file menus.js
+ * @description 系统菜单配置文件，定义所有功能模块的路由路径、图标与树形菜单结构
+ * @module views/Home/menus
+ */
 import { Home } from "./Main/home";
 
 import { Cash } from "./Main/market/Cash";

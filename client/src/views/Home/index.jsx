@@ -1,3 +1,8 @@
+/**
+ * @file index.jsx
+ * @description 主页面布局组件，整合左侧菜单、顶部导航、多标签页与主内容区域的整体框架
+ * @module views/Home/index
+ */
 import React, { useState } from "react";
 import { Layout } from "antd";
 import { LeftSideMenu } from "./LeftSideMenu";

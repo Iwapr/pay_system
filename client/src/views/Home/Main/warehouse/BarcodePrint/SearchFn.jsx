@@ -1,3 +1,8 @@
+/**
+ * @file SearchFn.jsx
+ * @description 条码打印搜索功能组件，支持按商品名称或条码搜索并展示结果
+ * @module views/Home/Main/warehouse/BarcodePrint/SearchFn
+ */
 import React, { useRef, useState } from "react";
 import styled from "../../../../../styles/warehouse/barcodeprint.scss";
 import { Input } from "antd";

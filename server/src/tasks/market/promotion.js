@@ -1,3 +1,22 @@
+/**
+ * server/src/tasks/market/promotion.js - 促销活动数据操作层（DAO 封装）
+ *
+ * 封装对 promotion、promotion_commodity 等表的 CRUD 操作。
+ * 在订单提交时用于查询当前生效的促销活动并计算折后价。
+ *
+ * 方法列表：
+ *  - queryPromoByNowTime(time):         查询当前时间是否有生效的促销活动
+ *  - getPromotion(args):                获取促销活动（全部或指定名称）
+ *  - createPromotion(data):             创建新促销活动
+ *  - deletePromotion(name):            删除促销活动
+ *  - updatePromotion(data):            更新促销活动
+ *  - getPromoCommodity(name):          获取促销活动商品列表
+ *  - addCommodityToPromo(data):        向促销活动添加商品
+ *  - delCommodityByPromo(name, barcode): 从促销活动移除商品
+ *  - editCommodityFromPromo(data):     修改促销活动商品
+ *  - getPromotionType():               获取促销类型列表
+ *  - calcPromotionPrice(basePrice, promo): 计算促销折后价
+ */
 import AppDAO from "../../data/AppDAO.js";
 import CommodityTask from "../commodity.js";
 

@@ -1,3 +1,8 @@
+/**
+ * @file UserManageFn.jsx
+ * @description 员工管理操作组件，提供新增、编辑、删除员工账号及权限角色配置功能
+ * @module views/Home/Main/users/UserManageFn
+ */
 import React, { useState } from "react";
 import styled from "../../../../styles/users.scss";
 import { Button, Modal, message, Form, Input, Select } from "antd";

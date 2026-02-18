@@ -1,3 +1,8 @@
+/**
+ * @file ExportFile.jsx
+ * @description 数据导出状态展示组件，根据导出进度显示就绪、加载中、成功或失败状态
+ * @module views/Home/Main/data/Export/ExportFile
+ */
 import React from "react";
 import styled from "../../../../../styles/data/export.scss";
 import { Button, Icon, Spin, Result } from "antd";

@@ -1,3 +1,8 @@
+/**
+ * @file OrderFn.jsx
+ * @description 订单统计操作栏组件，提供订单搜索、类型筛选与时间段查询功能
+ * @module views/Home/Main/statistics/orders/OrderFn
+ */
 import React from "react";
 import styled from "../../../../../styles/statistics/sales.scss";
 import { Input, Select, Button, Icon } from "antd";

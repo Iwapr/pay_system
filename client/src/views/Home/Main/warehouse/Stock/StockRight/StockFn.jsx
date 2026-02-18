@@ -1,3 +1,8 @@
+/**
+ * @file StockFn.jsx
+ * @description 进货单操作组件，提供新建、编辑和提交进货单的表单操作与数据验证
+ * @module views/Home/Main/warehouse/Stock/StockRight/StockFn
+ */
 import React, { useState } from "react";
 import styled from "../../../../../../styles/warehouse/stock.scss";
 import { Button, Form, Input, Modal, InputNumber, message } from "antd";

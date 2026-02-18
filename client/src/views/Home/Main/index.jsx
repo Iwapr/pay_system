@@ -1,3 +1,8 @@
+/**
+ * @file index.jsx
+ * @description 主内容区域路由容器，根据菜单配置动态渲染各功能页面组件
+ * @module views/Home/Main
+ */
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { Layout } from "antd";

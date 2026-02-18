@@ -1,3 +1,13 @@
+/**
+ * client/src/components/SupplierSelect.jsx - 供应商下拉选择组件
+ *
+ * 封装了 CustomSelectTree，在组件加载时自动获取供应商列表。
+ * 当 value 为 null 时自动选中第一个供应商（默认供应商逻辑）。
+ *
+ * @param {string}   value         - 当前选中的供应商名称
+ * @param {Function} handleChange  - 选择变更时的回调函数
+ * @param {object}   ajax          - AjaxProvider 提供的 HTTP 实例
+ */
 import React, { useState, useEffect } from "react";
 import { SupplierTask } from "../tasks/supplier";
 import { CustomSelectTree } from "./CustomSelectTree";

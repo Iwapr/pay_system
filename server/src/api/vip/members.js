@@ -1,3 +1,18 @@
+/**
+ * server/src/api/vip/members.js - VIP 会员管理路由
+ *
+ * 路由：
+ *  GET    /api/vip/members              - 获取所有会员列表
+ *  POST   /api/vip/members/create       - 创建会员
+ *  PUT    /api/vip/members/update       - 更新会员信息
+ *  DELETE /api/vip/members/delete/:code - 删除会员
+ *  GET    /api/vip/members/pointrules   - 获取积分规则
+ *  PUT    /api/vip/members/pointrules   - 更新积分规则
+ *  PUT    /api/vip/members/setpoint     - 手动调整积分
+ *  POST   /api/vip/members/change       - 换卡
+ *
+ * 认证：需要有效的 JWT Token。管理员权限接口另有标注。
+ */
 import express from "express";
 import VipTasks from "../../tasks/vip.js";
 import { throwError } from "../../middleware/handleError.js";

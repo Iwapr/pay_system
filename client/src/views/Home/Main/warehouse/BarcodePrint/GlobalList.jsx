@@ -1,3 +1,8 @@
+/**
+ * @file GlobalList.jsx
+ * @description 条码打印通用列表组件，基于虚拟列表渲染商品列表或搜索结果
+ * @module views/Home/Main/warehouse/BarcodePrint/GlobalList
+ */
 import React from "react";
 import { VirtualSelectList } from "../../../../../components/VirtualSelectList";
 import { useMemo } from "react";

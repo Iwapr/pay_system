@@ -1,3 +1,18 @@
+/**
+ * server/src/tasks/frontend/orders.js - 前台订单数据操作层（DAO 封装）
+ *
+ * 封装前台收银提交订单、查询历史订单、撤单等数据库操作。
+ * 包含订单总价验证、促销价格计算、积分发放逻辑。
+ *
+ * 方法列表：
+ *  - validChange(pay, change, price):    验证找零金额是否正确
+ *  - validOrderPrice(price, list):       验证前台提交总价与实际计算是否一致
+ *  - submitOrder(data, username):        提交收银订单（写入 DB，处理积分/促销）
+ *  - historyOrder(username, isAdmin):    获取历史订单列表
+ *  - undoOrder(order_id):               撤销订单（标记 is_undo=true）
+ *  - getOrdersByTimerange(start, end):  按时间范围查询订单
+ *  - addVipToOrder(order_id, vip_code): 为已完成订单绑定 VIP
+ */
 import AppDAO from "../../data/AppDAO.js";
 import { mathc } from "../../lib/mathc.js";
 import { getNightTimeStrap } from "../../lib/time.js";

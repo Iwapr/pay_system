@@ -1,3 +1,8 @@
+/**
+ * @file useTime.js
+ * @description 统计模块时间选择器自定义 Hook，支持按日、周、月及自定义时间范围进行数据筛选
+ * @module views/Home/Main/statistics/hooks/useTime
+ */
 import React, { useState } from "react";
 import { Button, DatePicker, Modal } from "antd";
 import styled from "../../../../../styles/statistics/usetime.scss";

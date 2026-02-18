@@ -1,3 +1,17 @@
+/**
+ * server/src/schema/user.js - 用户请求参数验证 Schema
+ *
+ * 使用 Joi 定义用户相关接口的输入验证规则。
+ * 用户名: 1-13 个字符，密码: 必须为字母数字 5-30 个字符。
+ *
+ * 导出内容：
+ *  - userPwdSchema:        登录验证 {username, password}
+ *  - newUserSchema:        创建用户 {new_username, password, group}
+ *  - updateUserPwdSchema:  修改密码 {username, new_password}
+ *  - updateUserStatusSchema:修改状态 {username, status(boolean)}
+ *  - updateUserNameSchema:  修改用户名 {old_username, new_username}
+ *  - updateUserGroupSchema: 修改用户组 {username, new_group}
+ */
 import Joi from "@hapi/joi";
 // import { group } from "./group.js";
 

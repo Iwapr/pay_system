@@ -1,3 +1,8 @@
+/**
+ * @file index.js
+ * @description 客显（顾客显示屏）设备操作类，提供向客显屏发送应付金额、付款金额、找零金额及清空显示等静态方法。
+ * @module device/client_display
+ */
 export { ClientDisplayConfig } from "./config";
 
 export class ClientDisplay {

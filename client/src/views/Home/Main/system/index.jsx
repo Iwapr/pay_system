@@ -1,3 +1,8 @@
+/**
+ * @file index.jsx
+ * @description 系统设置页面入口组件，整合店铺名称、设备配置等系统级参数的配置管理
+ * @module views/Home/Main/system/index
+ */
 import React, { useState, useMemo } from "react";
 import styled from "../../../../styles/system.scss";
 import { Card, Modal } from "antd";

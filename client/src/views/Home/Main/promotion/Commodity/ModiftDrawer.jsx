@@ -1,3 +1,8 @@
+/**
+ * @file ModiftDrawer.jsx
+ * @description 促销商品新增或修改抄屉，支持搜索商品并配置促销类型和促销价格
+ * @module views/Home/Main/promotion/Commodity/ModiftDrawer
+ */
 import React, { useState, useMemo, useEffect } from "react";
 import { Drawer, Form, Input, Select, InputNumber, Button, message } from "antd";
 import { CommodityTasks } from "../../../../../tasks/commodity";

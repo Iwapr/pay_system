@@ -1,3 +1,8 @@
+/**
+ * @file Loading.jsx
+ * @description 应用启动时的Token验证加载组件，自动校验本地Token并处理免登录跳转逻辑
+ * @module views/Common/Loading
+ */
 import React, { useState, useEffect } from "react";
 import { Layout, Spin } from "antd";
 import styled from "../../styles/loading.scss";

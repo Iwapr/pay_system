@@ -1,6 +1,16 @@
+/**
+ * server/src/schema/statistics.js - 统计分析请求参数验证 Schema
+ *
+ * 使用 Joi 定义统计相关接口的输入验证规则。
+ *
+ * 导出内容：
+ *  - timeStampSchema:        时间戳必填字段
+ *  - ordersSchema:           订单列表查询 {start_time, end_time}
+ *  - queryOrdersSchema:      多条件订单查询 {start_time, end_time, query, type}
+ *  - proportionSchema:       商品占比查询 {start_time, end_time, type}
+ *  - salesTrendsSchema:      销售趋势查询 {start_time, end_time, type}
+ */
 import Joi from "@hapi/joi";
-
-export const timeStampSchema = Joi.date().timestamp().required();
 
 const queryTypeSchema = Joi.string().min(1).max(10).required();
 

@@ -1,3 +1,8 @@
+/**
+ * @file index.jsx
+ * @description 商品管理页面入口组件，整合分类树、商品列表与增删改查操作功能
+ * @module views/Home/Main/warehouse/Commodity/index
+ */
 import React, { useEffect, useState, useMemo, useCallback } from "react";
 import styled from "../../../../../styles/warehouse/commodity.scss";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";

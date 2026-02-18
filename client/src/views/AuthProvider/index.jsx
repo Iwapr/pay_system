@@ -1,3 +1,8 @@
+/**
+ * @file index.jsx
+ * @description 鉴权状态上下文Provider，管理用户登录信息、权限状态及Token存储
+ * @module views/AuthProvider
+ */
 import React, { createContext, useContext, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {

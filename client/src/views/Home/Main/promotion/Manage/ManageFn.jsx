@@ -1,3 +1,8 @@
+/**
+ * @file ManageFn.jsx
+ * @description 促销活动管理操作栏，提供新增、修改、删除和按活动名称搜索功能
+ * @module views/Home/Main/promotion/Manage/ManageFn
+ */
 import React from "react";
 import styled from "../../../../../styles/promotion/manage.scss";
 import { Button, Input, Icon } from "antd";

@@ -1,3 +1,8 @@
+/**
+ * @file index.jsx
+ * @description 收银主界面组件，统一管理订单状态及收银功能各弹窗的协调控制
+ * @module views/Home/Main/market/Cash
+ */
 import React, { useState, useMemo } from "react";
 import { Row, message } from "antd";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";

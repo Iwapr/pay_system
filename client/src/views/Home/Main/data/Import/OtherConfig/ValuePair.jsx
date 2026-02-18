@@ -1,3 +1,8 @@
+/**
+ * @file ValuePair.jsx
+ * @description 展示单个字段的名称及其所有值映射对列表，支持删除单个映射项
+ * @module views/Home/Main/data/Import/OtherConfig/ValuePair
+ */
 import React from "react";
 import styled from "../../../../../../styles/data/import.scss";
 import { Icon, Tag } from "antd";

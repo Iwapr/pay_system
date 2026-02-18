@@ -1,3 +1,8 @@
+/**
+ * @file PosPrint.jsx
+ * @description 小票打印机配置表单，选择并保存POS打印机名称配置
+ * @module views/Home/Main/device/PosPrint
+ */
 import React from "react";
 import { Form, Select, Button, message } from "antd";
 import { usePosprint } from "../../../../hooks/usePosprint";

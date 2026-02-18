@@ -1,3 +1,8 @@
+/**
+ * @file VipSetPointModal.jsx
+ * @description 会员积分设置弹窗组件，支持手动增减指定会员的积分数量
+ * @module views/Home/Main/vip/Setting/VipSetPointModal
+ */
 import React from "react";
 import { Modal, Input, message, Form, Radio, InputNumber } from "antd";
 import { VipManage } from "../../../../../tasks/vip";

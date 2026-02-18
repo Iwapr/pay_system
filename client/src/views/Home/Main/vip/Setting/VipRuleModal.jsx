@@ -1,3 +1,8 @@
+/**
+ * @file VipRuleModal.jsx
+ * @description 会员积分规则配置弹窗组件，设置消费金额与积分兑换比例
+ * @module views/Home/Main/vip/Setting/VipRuleModal
+ */
 import React from "react";
 import { Modal, InputNumber, message } from "antd";
 import { VipManage } from "../../../../../tasks/vip";

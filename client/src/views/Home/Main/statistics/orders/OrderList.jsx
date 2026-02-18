@@ -1,3 +1,8 @@
+/**
+ * @file OrderList.jsx
+ * @description 订单统计列表组件，以虚拟滚动列表形式展示订单数据及金额汇总
+ * @module views/Home/Main/statistics/orders/OrderList
+ */
 import React from "react";
 import styled from "../../../../../styles/statistics/sales.scss";
 import { VirtualSelectList } from "../../../../../components/VirtualSelectList";

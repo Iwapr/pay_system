@@ -1,7 +1,10 @@
+/**
+ * @file CashVipDetails.jsx
+ * @description 收银界面会员信息展示组件，展示卡号、积分、手机号等详细信息
+ * @module views/Home/Main/market/Cash/CashLeft/CashVipDetails
+ */
 import React from "react";
-import styled from "../../../../../../styles/cash.scss";
-
-function VipDetails({ label, value }) {
+import styled from "../../../../../../styles/cash.scss";({ label, value }) {
     return (
         <div className={styled["cash-vip-details"]}>
             <span className={styled["label"]}>{label}:&nbsp;&nbsp;</span>

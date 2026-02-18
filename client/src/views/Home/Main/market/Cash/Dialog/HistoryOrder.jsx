@@ -1,3 +1,8 @@
+/**
+ * @file HistoryOrder.jsx
+ * @description 历史订单弹窗，查看今日已完成订单并支持撤单和蠗1小票
+ * @module views/Home/Main/market/Cash/Dialog/HistoryOrder
+ */
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import { Input, Modal, Button, message as antdMessage } from "antd";
 import styled from "../../../../../../styles/cash.scss";

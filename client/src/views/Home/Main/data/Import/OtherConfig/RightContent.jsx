@@ -1,3 +1,8 @@
+/**
+ * @file RightContent.jsx
+ * @description 导入其他配置右侧内容区域，用于添加字段属性值映射规则
+ * @module views/Home/Main/data/Import/OtherConfig/RightContent
+ */
 import React, { useState } from "react";
 import styled from "../../../../../../styles/data/import.scss";
 import { Select, Form, Radio, Input, InputNumber, Button, Icon, Modal } from "antd";

@@ -1,3 +1,12 @@
+/**
+ * server/src/tasks/store.js - 店铺配置数据操作层（DAO 封装）
+ *
+ * 封装对 store_config 表的数据库操作。
+ *
+ * 方法列表：
+ *  - getStoreName(): 查询店铺名称配置
+ *  - setStoreName(name): 更新店铺名称
+ */
 import AppDAO from "../data/AppDAO.js";
 
 export class StoreTasks {

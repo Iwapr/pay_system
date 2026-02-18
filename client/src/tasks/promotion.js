@@ -1,3 +1,19 @@
+/**
+ * client/src/tasks/promotion.js - 促销活动 API 调用封装
+ *
+ * 封装营销促销活动相关接口（/api/market/promotion/*）。
+ *
+ * 方法列表：
+ *  - getAllPromotion(ajax):                    获取所有促销活动
+ *  - delPromotion(ajax, name):               删除促销活动
+ *  - createPromotion(ajax, data):            创建促销活动
+ *  - editPromotion(ajax, data):              修改促销活动
+ *  - getPromoCommodity(ajax, name):          获取活动商品列表
+ *  - delCommodityByPromo(ajax, name, barcode): 从活动移除商品
+ *  - getPromotionType(ajax):                 获取活动类型列表
+ *  - addCommodityToPromo(ajax, data):        向活动添加商品
+ *  - editCommodityFromPromo(ajax, data):     修改活动商品配置
+ */
 export class PromotionManage {
     static getAllPromotion(ajax) {
         // 获取所有促销活动

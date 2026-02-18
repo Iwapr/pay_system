@@ -1,3 +1,8 @@
+/**
+ * @file PieCharts.jsx
+ * @description 销售占比饼图组件，基于 ECharts 渲染商品销售比例的可交互饼图
+ * @module views/Home/Main/statistics/proportion/PieCharts
+ */
 import React, { useEffect, useState } from "react";
 import echarts from "echarts/lib/echarts";
 import "echarts/lib/chart/pie";

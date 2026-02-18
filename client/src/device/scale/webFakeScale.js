@@ -1,3 +1,9 @@
+/**
+ * @file webFakeScale.js
+ * @description Web 演示版电子秤模拟类，由于 Web 环境无法直接连接电子秤硬件，
+ * 本类模拟 PLU 数据发送过程，逐条延时触发回调以替代真实设备响应。
+ * @module device/scale/webFakeScale
+ */
 export class WebFakeScale {
 
     // web演示版本无法连接电子秤，所以直接返回假响应

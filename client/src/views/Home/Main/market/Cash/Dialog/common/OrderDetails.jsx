@@ -1,3 +1,8 @@
+/**
+ * @file OrderDetails.jsx
+ * @description 订单详情通用组件，以虚拟列表展示订单内商品情况包括价格、数量和金额
+ * @module views/Home/Main/market/Cash/Dialog/common/OrderDetails
+ */
 import React, { useState, useEffect, useMemo } from "react";
 
 import { VirtualSelectList } from "../../../../../../../components/VirtualSelectList";

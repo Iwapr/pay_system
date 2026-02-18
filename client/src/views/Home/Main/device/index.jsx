@@ -1,3 +1,8 @@
+/**
+ * @file index.jsx
+ * @description 硬件设备管理入口，以卡片形式展示并配置电子秤、小票机、客显和錢笱各外设
+ * @module views/Home/Main/device
+ */
 import React, { useState, useMemo } from "react";
 import styled from "../../../../styles/device.scss";
 import { Card, Modal } from "antd";

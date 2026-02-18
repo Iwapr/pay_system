@@ -1,3 +1,8 @@
+/**
+ * @file HangUpOrder.jsx
+ * @description 挂单管理弹窗，展示挂起的订单列表并支持取单悠继操作
+ * @module views/Home/Main/market/Cash/Dialog/HangUpOrder
+ */
 import React, { useState, useEffect, useMemo } from "react";
 import { Modal } from "antd";
 import styled from "../../../../../../styles/cash.scss";

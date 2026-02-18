@@ -1,3 +1,19 @@
+/**
+ * server/src/tasks/users.js - 用户数据操作层（DAO 封装）
+ *
+ * 封装对 users 表的 CRUD 操作，包括密码加密、
+ * 用户组映射和权限验证。
+ *
+ * 方法列表：
+ *  - getAllUser():                       获取所有用户（含用户组名称）
+ *  - mapValueToText(list):              将用户组 ID 映射为名称
+ *  - getUserDetails(arg, type):         按 ID 或用户名查询用户
+ *  - createUser(username, pwd, group):  新建用户（密码加密）
+ *  - changePwd(username, newPwd):       修改用户密码
+ *  - validateLogin(username, pwd):      验证用户登录
+ *  - changeUserGroup(username, group):  修改用户组
+ *  - changeUserStatus(username, status):启用/禁用用户
+ */
 import AppDAO from "../data/AppDAO.js";
 import { validateData } from "../lib/encryptPwd.js";
 import AuthorityTask from "./authority.js";

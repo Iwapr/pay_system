@@ -1,3 +1,8 @@
+/**
+ * @file usePromo.jsx
+ * @description 促销活动自定义Hook，提供活动类型列表和全部促销活动的获取与刷新
+ * @module views/Home/Main/promotion/usePromo
+ */
 import { useState, useEffect } from "react";
 import { PromotionManage } from "../../../../tasks/promotion";
 

@@ -1,3 +1,9 @@
+/**
+ * @file webpack.electron.js
+ * @description 客户端 Webpack Electron 环境配置，在公共配置基础上配置 Electron 渲染进程所需的
+ * 渐进式 CSS 加载、第三方库和 Electron 环境变量。
+ * @module client/webpack/electron
+ */
 const common = require("./webpack.common");
 const merge = require("webpack-merge");
 const webpack = require("webpack");

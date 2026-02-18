@@ -1,3 +1,14 @@
+/**
+ * server/src/api/market/promotion/commodity.js - 促销活动商品管理路由
+ *
+ * 路由：
+ *  GET    /api/market/promotion/commodity/:name - 获取活动商品列表
+ *  POST   /api/market/promotion/commodity       - 向活动添加商品
+ *  PUT    /api/market/promotion/commodity       - 修改活动商品配置
+ *  DELETE /api/market/promotion/commodity       - 从活动移除商品
+ *
+ * 认证：需要管理员权限。
+ */
 import express from "express";
 import PromotionTask from "../../../tasks/market/promotion.js";
 import CommodityTask from "../../../tasks/commodity.js";

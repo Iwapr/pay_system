@@ -1,3 +1,16 @@
+/**
+ * client/src/tasks/categories.js - 商品分类 API 调用封装
+ *
+ * 封装与服务器分类接口的通信（/api/warehouse/categories/*）。
+ *
+ * 方法列表：
+ *  - getCategoriesTree(ajax):                   获取分类树 GET
+ *  - updateCategoryName(ajax, old, new):         重命名分类 PUT
+ *  - deleteCategory(ajax, name):                 删除分类 DELETE
+ *  - createCategory(ajax, name):                 创建顶级分类 POST
+ *  - createChildCategory(ajax, name, parent):    创建子分类 POST
+ *  - updateCategoryParent(ajax, name, parent):   修改父分类 PUT
+ */
 export class CategoriesTask {
     static getCategoriesTree(ajax) {
         return ajax.get("/api/warehouse/categories");

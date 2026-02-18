@@ -1,3 +1,15 @@
+/**
+ * server/src/tasks/export_data.js - 数据导出数据处理层
+ *
+ * 从各 DAO 汇聚数据，生成可导出为 Excel/CSV 的格式化数据结构。
+ *
+ * 依赖多个 DAO：VipTasks, CommodityTasks, CategoryTasks,
+ * SupplierTasks, OrderTasks, UsersTasks。
+ *
+ * 功能：
+ *  - createDataSource(list, config): 将 DAO 数据映射为导出用字段名格式
+ *  - 各类型数据的导出方法（商品/供应商/会员/订单等）
+ */
 import VipTasks from "../tasks/vip.js";
 import CommodityTasks from "../tasks/commodity.js"
 import CategoryTasks from "../tasks/categories.js";

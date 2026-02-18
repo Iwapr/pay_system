@@ -1,3 +1,8 @@
+/**
+ * @file index.jsx
+ * @description 登录页面组件，提供用户名密码登录、记住密码与连接配置功能
+ * @module views/Login/index
+ */
 import React, { useState } from "react";
 import { Form, Input, Button, Row, Icon, Typography, Checkbox, message as antdMessage } from "antd";
 import { Redirect, useLocation } from "react-router-dom";

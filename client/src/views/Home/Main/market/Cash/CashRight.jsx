@@ -1,3 +1,8 @@
+/**
+ * @file CashRight.jsx
+ * @description 收银界面右侧热键操作按鈕列表组件，支持挂单数量角标显示
+ * @module views/Home/Main/market/Cash/CashRight
+ */
 import React from "react";
 import { Col, Badge } from "antd";
 import styled from "../../../../../styles/cash.scss";

@@ -1,3 +1,8 @@
+/**
+ * @file CommodityFn.jsx
+ * @description 促销商品管理操作栏，提供选择促销活动及商品的新增、修改、删除按鈕
+ * @module views/Home/Main/promotion/Commodity/CommodityFn
+ */
 import React from "react";
 import styled from "../../../../../styles/promotion/commodity.scss";
 import { Select, Button, Icon } from "antd";

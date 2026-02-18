@@ -1,3 +1,8 @@
+/**
+ * @file index.jsx
+ * @description 首页容器组件，根据用户权限渲染管理员或收银员首页看板并加载当日数据
+ * @module views/Home/Main/home
+ */
 import React, { useState, useMemo, useEffect } from "react";
 import { useSelector } from "react-redux";
 import styled from "../../../../styles/home.scss";

@@ -1,3 +1,8 @@
+/**
+ * @file BarcodeInputAndTotal.jsx
+ * @description 收银左侧条码输入与订单合计组件，支持客显同步和多商品选择
+ * @module views/Home/Main/market/Cash/CashLeft/BarcodeInputAndTotal
+ */
 import React, { useRef, useEffect, useState } from "react";
 import { Modal, Input, } from "antd";
 import styled from "../../../../../../styles/cash.scss";
