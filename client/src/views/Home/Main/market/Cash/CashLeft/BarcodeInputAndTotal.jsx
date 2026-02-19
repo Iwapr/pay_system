@@ -4,11 +4,12 @@
  * @module views/Home/Main/market/Cash/CashLeft/BarcodeInputAndTotal
  */
 import React, { useRef, useEffect, useState } from "react";
-import { Modal, Input, } from "antd";
+import { Modal, Input, Button } from "antd";
 import styled from "../../../../../../styles/cash.scss";
 import { useAjax } from "../../../../../AjaxProvider";
 import { CommodityTasks } from "../../../../../../tasks/commodity";
 import { SelectCommodity } from "../Dialog/SelectCommodity";
+import { CameraScanner } from "../Dialog/CameraScanner";
 import { ClientDisplay } from "../../../../../../device/client_display";
 
 const { Search } = Input;
@@ -78,6 +79,7 @@ export function BarcodeInputAndTotal({
         show: false,
         list: []
     });
+    const [cameraScannerVisible, setCameraScannerVisible] = useState(false);
 
     useEffect(() => {
         inputRef.current.focus();
@@ -143,6 +145,38 @@ export function BarcodeInputAndTotal({
         setValue(target.value);
     }
 
+    function handleCameraScanned(code) {
+        setCameraScannerVisible(false);
+        setValue(code.trim().toUpperCase());
+        // 延迟一帧确保 value 已更新后再触发查询
+        setTimeout(async () => {
+            try {
+                const { data } = await CommodityTasks.query(ajax, code.trim().toUpperCase());
+                if (data.length === 0) {
+                    Modal.error({
+                        title: `找不到 ${code} 相关的商品信息!`,
+                        autoFocusButton: null,
+                        okText: "关闭"
+                    });
+                } else if (data.length === 1) {
+                    const [details] = data;
+                    if (details.is_delete) {
+                        Modal.error({ title: "此商品已被下架，无法销售!" });
+                    } else if (details.sale_price === 0) {
+                        Modal.error({ title: "此商品尚未设置销售价格，请联系管理员!" });
+                    } else {
+                        addCommodity(details);
+                        setValue("");
+                    }
+                } else {
+                    setSelectCommodityData(s => ({ ...s, list: data, show: true }));
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }, 0);
+    }
+
     async function queryCommodity() {
         if (value === "" || value.trim() === "") return;
 
@@ -200,6 +234,17 @@ export function BarcodeInputAndTotal({
                 onChange={handleChange}
                 onKeyDown={handleHotKey}
                 onSearch={queryCommodity}
+            />
+            <Button
+                icon="camera"
+                title="摄像头扫码"
+                style={{ marginLeft: 6, flexShrink: 0 }}
+                onClick={() => setCameraScannerVisible(true)}
+            />
+            <CameraScanner
+                visible={cameraScannerVisible}
+                onClose={() => setCameraScannerVisible(false)}
+                onScanned={handleCameraScanned}
             />
             <div className={styled["cash-total"]}>
                 <p>数量:&nbsp;&nbsp;
