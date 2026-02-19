@@ -10,7 +10,7 @@ on:
 
 jobs:
   build-windows:
-    runs-on: windows-latest  # 使用 GitHub 提供的 Windows 虚拟机
+    runs-on: windows-2019  # windows-2019 预装 VS2019 + Windows 10 SDK，node-gyp 能直接编译原生模块
 
     steps:
       - name: 检出代码
@@ -21,22 +21,7 @@ jobs:
         with:
           node-version: '22'
 
-      # sqlite3 是原生模块，需要 Windows SDK 才能从源码编译
-      # GitHub Actions 的 windows-latest 自带 VS2022 但默认不含 Windows SDK
-      - name: 安装 Windows 10 SDK（通过 VS Installer）
-        shell: pwsh
-        run: |
-          $installer = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vs_installer.exe"
-          $vsPath = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -latest -property installationPath
-          Write-Host "VS Path: $vsPath"
-          Start-Process -FilePath $installer `
-            -ArgumentList "modify","--installPath",$vsPath,`
-              "--add","Microsoft.VisualStudio.Component.Windows10SDK.19041",`
-              "--quiet","--norestart","--force" `
-            -Wait -NoNewWindow
-          Write-Host "SDK install complete"
-
-      # ── 1. 安装根目录依赖，跳过 postinstall（sqlite3 编译留到环境就绪后手动执行）──
+      # ── 1. 安装根目录依赖，跳过 postinstall（sqlite3 编译留到后面手动触发）──
       - name: 安装根目录依赖
         run: npm install --ignore-scripts
 
@@ -79,8 +64,8 @@ jobs:
       - name: 重新编译原生模块
         run: npx electron-builder install-app-deps
         env:
-          MSVS_VERSION: "2022"
-          npm_config_msvs_version: "2022"
+          MSVS_VERSION: "2019"
+          npm_config_msvs_version: "2019"
 
       # ── 5. 用 electron-builder 生成 Windows 安装包 ──
       - name: 生成 Windows 安装包
