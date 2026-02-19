@@ -1,0 +1,79 @@
+name: Build Windows Installer
+
+on:
+  # 手动触发：在 GitHub 仓库页面 Actions 标签里点 "Run workflow"
+  workflow_dispatch:
+  # 或者推送 tag 时自动触发（如 git tag v1.0.0 && git push --tags）
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-windows:
+    runs-on: windows-latest  # 使用 GitHub 提供的 Windows 虚拟机
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 安装 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      # ── 1. 安装根目录依赖（Electron、electron-builder）──
+      - name: 安装根目录依赖
+        run: npm install
+
+      # ── 1.5 从 GitHub Secrets 生成 secrets.js ──
+      # 在 GitHub 仓库 → Settings → Secrets and variables → Actions 中添加：
+      #   ALIPAY_APP_ID        → 支付宝 AppID
+      #   ALIPAY_PRIVATE_KEY   → RSA2 私钥（完整内容含头尾行）
+      #   ALIPAY_PUBLIC_KEY    → 支付宝公钥（完整内容含头尾行）
+      #   ALIPAY_SANDBOX       → true 或 false
+      - name: 生成 secrets.js
+        shell: bash
+        run: |
+          cat > server/src/config/secrets.js << 'SECRETS_EOF'
+          const secrets = {
+            alipay: {
+              appId: "${{ secrets.ALIPAY_APP_ID }}",
+              privateKey: `${{ secrets.ALIPAY_PRIVATE_KEY }}`,
+              alipayPublicKey: `${{ secrets.ALIPAY_PUBLIC_KEY }}`,
+              sandbox: ${{ secrets.ALIPAY_SANDBOX || 'false' }}
+            }
+          };
+          export default secrets;
+          SECRETS_EOF
+
+      # ── 2. 打包服务端 → public/bundle.cjs ──
+      - name: 安装服务端依赖
+        run: cd server && npm install
+
+      - name: 打包服务端
+        run: cd server && npm run build
+
+      # ── 3. 打包客户端 → client/dist ──
+      - name: 安装客户端依赖
+        run: cd client && npm install
+
+      - name: 打包客户端
+        run: cd client && npm run build:electron
+
+      # ── 4. 重新编译 sqlite3（为 Windows 平台）──
+      - name: 重新编译原生模块
+        run: npm run postinstall
+
+      # ── 5. 用 electron-builder 生成 Windows 安装包 ──
+      - name: 生成 Windows 安装包
+        run: npm run build
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # ── 6. 上传安装包到 Artifacts（可下载）──
+      - name: 上传构建产物
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-installer
+          path: build/*.exe
+          retention-days: 30
