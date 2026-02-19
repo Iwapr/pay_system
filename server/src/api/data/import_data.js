@@ -8,18 +8,34 @@
  */
 import express from "express";
 import { validBody } from "../../middleware/validBody.js";
-import { importCommpditySchema } from "../../schema/data.js";
+import { importCommpditySchema, importStockSchema } from "../../schema/data.js";
 import ImportCommodityManage from "../../tasks/import_data/commodity.js";
+import ImportStockManage from "../../tasks/import_data/stock.js";
 
 const route = express.Router();
 
 route.post("/commodity", validBody(importCommpditySchema), async (req, res, next) => {
+    try {
+        const { rules, data } = req.body;
 
-    const { rules, data } = req.body;
+        const result = await ImportCommodityManage.importData(rules, data);
 
-    const result = await ImportCommodityManage.importData(rules, data);
+        res.json(result);
+    } catch (error) {
+        next(error);
+    }
+});
 
-    res.json(result);
+route.post("/stock", validBody(importStockSchema), async (req, res, next) => {
+    try {
+        const { rules, data } = req.body;
+
+        const result = await ImportStockManage.importData(rules, data);
+
+        res.json(result);
+    } catch (error) {
+        next(error);
+    }
 });
 
 export default route;

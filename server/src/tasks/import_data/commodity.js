@@ -30,6 +30,9 @@ export default class ImportCommdityManage {
         const current_category_list = current_category_value.map(({ name }) => name);
         // 当前数据库中所有分类名称
 
+        const categoryNameToId = new Map(current_category_value.map(({ id, name }) => ([name, id])));
+        const supplierNameSet = new Set(current_supplier_list);
+
         let create_count = 0;
         let update_count = 0;
         let skip_count = 0;
@@ -37,8 +40,8 @@ export default class ImportCommdityManage {
         async function handleCategory(category_name) {
             // 处理分类
 
-            if (current_category_list.includes(category_name)) {
-                return current_category_value.find(i => i.name === category_name).id;
+            if (categoryNameToId.has(category_name)) {
+                return categoryNameToId.get(category_name);
             }
             // 当分类已经存在时返回对应id
 
@@ -57,6 +60,8 @@ export default class ImportCommdityManage {
             current_category_list.push(category_name);
             // 将新创建的分类名称传入列表中
 
+            categoryNameToId.set(category_name, lastID);
+
             return lastID;
         }
 
@@ -68,14 +73,19 @@ export default class ImportCommdityManage {
 
 
 
-            if (current_supplier_list.includes(supplier_name) || supplier_exist) return supplier_name;
-            // 当供应商已经存在时或者规则设为使用默认供应商时直接返回供应商
+            if (supplierNameSet.has(supplier_name)) return supplier_name;
+            // 当供应商已经存在时，直接返回供应商
+
+            if (!supplier_exist) return default_supplier;
+            // 当规则设置为不创建新供应商时，使用默认供应商
 
             await SupplierManage.createSupplier(supplier_name);
             // 否则就创建供应商
 
             current_supplier_list.push(supplier_name);
             // 将新创建的供应商名称传入列表中
+
+            supplierNameSet.add(supplier_name);
 
             return supplier_name;
         }
@@ -89,7 +99,7 @@ export default class ImportCommdityManage {
                 ...fields
             } = item;
 
-            const result = await CommodityTask.getCommodityDetails(barcode);
+            const result = await CommodityTask.getCommodityDetails(barcode, "barcode", true);
             // 查找是否含有条码对应的商品
             if (result) {
                 // 此条码的商品已经存在
