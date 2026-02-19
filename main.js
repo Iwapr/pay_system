@@ -11,7 +11,8 @@
 const path = require("path");       // Node.js 路径模块
 const url = require("url");         // Node.js URL 模块，用于构造 file:// 地址
 const fs = require("fs").promises;  // 文件系统 Promise API
-const { app, BrowserWindow, protocol, globalShortcut, Menu } = require("electron");
+const fssync = require("fs");       // 同步 fs，用于首次拷贝数据库
+const { app, BrowserWindow, protocol, globalShortcut, Menu, dialog } = require("electron");
 
 // 全局持有窗口引用，防止被 GC 回收导致窗口意外关闭
 let mainWindow;
@@ -82,19 +83,44 @@ function startServer() {
     fs.readFile(pathname)
         .then(v => console.log("检查到不启动服务器的flag，不启动服务器！"))
         .catch(error => {
-            // 注入 DB 路径，供 bundle.cjs 运行时读取（避免 webpack 编译期替换 NODE_ENV）
+            // 注入 DB 路径，供 bundle.cjs 运行时读取
             if (!process.env.DB_PATH) {
-                const { app } = require("electron");
-                process.env.DB_PATH = app.isPackaged
-                    ? path.join(process.resourcesPath, "db", "data.db")   // 打包后：Contents/Resources/db/data.db
-                    : path.join(__dirname, "server", "db", "data.db");    // 开发时：<项目根>/server/db/data.db
+                if (app.isPackaged) {
+                    // 打包后：把数据库放到 userData（跨平台可写，且重装 App 不会覆盖数据）
+                    // userData 路径示例：
+                    //   macOS: ~/Library/Application Support/xiaomu-possystem/
+                    //   Windows: C:\Users\<user>\AppData\Roaming\xiaomu-possystem\
+                    const userDataDb = path.join(app.getPath("userData"), "data.db");
+                    const bundledDb   = path.join(process.resourcesPath, "db", "data.db");
+                    // 首次运行：把打包进来的初始数据库复制到 userData
+                    if (!fssync.existsSync(userDataDb) && fssync.existsSync(bundledDb)) {
+                        try {
+                            fssync.mkdirSync(path.dirname(userDataDb), { recursive: true });
+                            fssync.copyFileSync(bundledDb, userDataDb);
+                        } catch (copyErr) {
+                            dialog.showErrorBox("数据库初始化失败", String(copyErr));
+                        }
+                    }
+                    process.env.DB_PATH = userDataDb;
+                } else {
+                    // 开发时：直接用项目内的数据库
+                    process.env.DB_PATH = path.join(__dirname, "server", "db", "data.db");
+                }
             }
-            // 先杀掉占用 8888 端口的旧进程（比如遗留的 dev nodemon），再加载服务
+            // macOS/Linux：先杀掉占用 8888 端口的旧进程；Windows 上 lsof 不存在，忽略错误
             const { execSync } = require("child_process");
             try {
                 execSync("lsof -ti :8888 | xargs kill -9", { stdio: "ignore" });
-            } catch (_) { /* 端口空闲时 xargs 返回非零码，忽略即可 */ }
-            require("./public/bundle.cjs");  // 加载并启动 Express 服务器
+            } catch (_) { /* Windows 或端口空闲时忽略 */ }
+            // 加载并启动 Express 服务器
+            try {
+                require("./public/bundle.cjs");
+            } catch (serverErr) {
+                dialog.showErrorBox(
+                    "服务器启动失败",
+                    "bundle.cjs 加载出错，请截图此信息反馈给开发者：\n\n" + serverErr.stack
+                );
+            }
         });
 }
 

@@ -49,7 +49,7 @@
       "main.js",
       "public/**/*",
       "client/dist/**/*",
-      "node_modules/sqlite3/**"
+      "node_modules/**"
     ],
     "extraFiles": [
       {
