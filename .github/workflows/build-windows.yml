@@ -19,7 +19,20 @@ jobs:
       - name: 安装 Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '22'
+
+      # sqlite3 是原生模块，需要 Windows SDK 才能从源码编译
+      # GitHub Actions 的 windows-latest 自带 VS2022 但默认不含 Windows SDK
+      - name: 安装 Windows SDK
+        run: choco install windows-sdk-10-version-2004-all --no-progress -y
+        shell: pwsh
+
+      # 让 node-gyp 找到 VS2022 工具链
+      - name: 配置 node-gyp
+        run: |
+          npm config set msvs_version 2022
+          npm install --global node-gyp
+        shell: pwsh
 
       # ── 1. 安装根目录依赖（Electron、electron-builder）──
       - name: 安装根目录依赖
