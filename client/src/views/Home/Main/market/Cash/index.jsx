@@ -57,6 +57,9 @@ export function Cash() {
     const [checkoutStatus, setCheckModalStatus] = useState(false);
     // 结账界面Modal的显示状态
 
+    const [checkoutInitial, setCheckoutInitial] = useState({ payType: null, authCode: "" });
+    // 结账弹窗的初始支付方式（扫付款码时自动设置）
+
     const [hangUpStatus, setHangUpStatus] = useState(false);
     // 挂单界面的显示状态
 
@@ -75,6 +78,7 @@ export function Cash() {
     function hideCheckModal() {
         // 关闭结账Modal
         setCheckModalStatus(false);
+        setCheckoutInitial({ payType: null, authCode: "" });
     }
 
     function hideVipModal() {
@@ -346,6 +350,19 @@ export function Cash() {
 
     const Right = useMemo(() => (<CashRight show={showCashHotKey} hotkey={hotkey} count={hangupOrder.list.length} />), [showCashHotKey, hotkey, hangupOrder]);
 
+    /**
+     * 当扫码枪扫到移动支付付款码时调用
+     * 自动打开结账弹窗并预设支付方式和付款码
+     */
+    function handlePayCodeScanned(payType, authCode) {
+        if (commodityList.length === 0) {
+            message.warn("购物车为空，无法结账!");
+            return;
+        }
+        setCheckoutInitial({ payType, authCode });
+        setCheckModalStatus(true);
+    }
+
     const { count, money, origin_price } = useMemo(() => {
         let count = 0;
         let money = 0;
@@ -379,6 +396,7 @@ export function Cash() {
                 hotkey={hotkey}
                 count={count}
                 money={money}
+                onPayCodeScanned={handlePayCodeScanned}
             />
             {Right}
 
@@ -396,6 +414,8 @@ export function Cash() {
                 origin_price={origin_price}
                 list={commodityList}
                 vipCode={vip.code}
+                initialPayType={checkoutInitial.payType}
+                initialAuthCode={checkoutInitial.authCode}
             />
 
             <HandUpOrder

@@ -1,0 +1,36 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^\\$env:Path = \\[System\\.Environment\\]::GetEnvironmentVariable\\('Path','Machine'\\) \\+ ';' \\+ \\[System\\.Environment\\]::GetEnvironmentVariable\\('Path','User'\\); python --version 2>&1$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "Get-Command": true,
+        "New-Object": true,
+        "Start-Process": true,
+        "where.exe": true,
+        "node-gyp": true,
+        "/^\\$env:PYTHON=\"C:\\\\Python311\\\\python\\.exe\"; Push-Location e:\\\\pay_system\\\\node_modules\\\\sqlite3; node \"e:\\\\pay_system\\\\node_modules\\\\node-gyp\\\\bin\\\\node-gyp\\.js\" rebuild 2>&1; Pop-Location$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "&": true,
+        "ConvertFrom-Json": true,
+        "ForEach-Object": true,
+        "Set-Content": true,
+        "/^Push-Location e:\\\\pay_system\\\\server; node --input-type=module --experimental-vm-modules -e \"import '\\./tools/initDB\\.js'\" 2>&1; Pop-Location$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "Get-Item": true,
+        "Set-ExecutionPolicy": true,
+        "/^node \"node_modules\\\\\\.bin\\\\electron\" \\. --env NODE_ENV=production 2>&1 &$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^\\$env:Path = \\[System\\.Environment\\]::GetEnvironmentVariable\\('Path','Machine'\\) \\+ ';' \\+ \\[System\\.Environment\\]::GetEnvironmentVariable\\('Path','User'\\); Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force; node -v$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "npm run dev:client": true
+    }
+}

@@ -5,6 +5,24 @@
  */
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
+
+/**
+ * 识别是否为移动支付付款码
+ * 支付宝：25~30 开头，16~24 位纯数字
+ * 微信：10~15 开头，18 位纯数字
+ */
+function detectPayCode(code) {
+    const str = String(code).trim();
+    if (!/^\d+$/.test(str)) return { isPayCode: false, payType: null };
+    const prefix = parseInt(str.slice(0, 2), 10);
+    if (str.length >= 16 && str.length <= 24 && prefix >= 25 && prefix <= 30) {
+        return { isPayCode: true, payType: "支付宝" };
+    }
+    if (str.length === 18 && prefix >= 10 && prefix <= 15) {
+        return { isPayCode: true, payType: "微信" };
+    }
+    return { isPayCode: false, payType: null };
+}
 import { useAjax } from "../../../../../AjaxProvider";
 import { Modal, Statistic, Radio, Input, Button, Switch } from "antd";
 import styled from "../../../../../../styles/cash.scss";
@@ -40,7 +58,9 @@ export function Checkout({
     money: sale_price,
     origin_price,
     list,
-    vipCode
+    vipCode,
+    initialPayType,
+    initialAuthCode
 }) {
 
     const dispatch = useDispatch();
@@ -137,8 +157,11 @@ export function Checkout({
     const { show_client_pay, client_pay, pay_type, change } = data;
 
     const isAlipay = pay_type === "支付宝";
+    const isWechat = pay_type === "微信";
+    // 需要扫付款码的支付方式（支付宝、微信均扫码收款）
+    const isScanPay = isAlipay || isWechat;
 
-    // 支付宝专属状态
+    // 扫码支付专属状态（支付宝/微信共用此状态字段）
     const [alipay, setAlipay] = useState({
         authCode: "",          // 扫码枪扫入的授权码
         status: "idle",        // idle | paying | success | fail
@@ -147,9 +170,12 @@ export function Checkout({
 
     const alipayInputRef = useRef(null);
 
+    // 在现金模式下用于缓冲扫码枪连续输入的字符，Enter 时检测是否为付款码
+    const cashScanBufferRef = useRef("");
+
     const checkPassFlag = list.length > 0 && (
-        isAlipay
-            ? alipay.authCode.length >= 16   // 支付宝模式：授权码长度合法即可点击
+        isScanPay
+            ? alipay.authCode.length >= 16   // 扫码支付模式：授权码长度合法即可点击
             : String(show_client_pay) === String(client_pay) && change >= 0
     );
 
@@ -236,14 +262,18 @@ export function Checkout({
 
     /**
      * 支付宝条码支付流程
+     * @param {string} [overrideCode] - 传入时直接使用该付款码，不读 state（用于自动确认场景，避免闭包陈旧）
      * 1. 检验授权码格式（16-24位数字）
      * 2. 调后端 alipay-pay（后端轮询支付宝最多30秒）
      * 3. 成功 → 自动提交订单到 POS 数据库 → 关闭弹窗、打印小票
      * 4. 失败 → 显示错误，允许重新扫码
      */
-    async function checkAlipay() {
-        if (!checkPassFlag || alipay.status === "paying") return;
-        if (!/^\d{16,24}$/.test(alipay.authCode)) {
+    async function checkAlipay(overrideCode) {
+        const authCode = overrideCode !== undefined ? overrideCode : alipay.authCode;
+        if (alipay.status === "paying") return;
+        // 手动点击时校验 checkPassFlag；自动确认（有 overrideCode）时跳过
+        if (overrideCode === undefined && !checkPassFlag) return;
+        if (!/^\d{16,24}$/.test(authCode)) {
             setAlipay(s => ({ ...s, status: "fail", message: "付款码格式不正确，请重新扫码" }));
             return;
         }
@@ -254,7 +284,7 @@ export function Checkout({
 
         try {
             const { data: result } = await Order.alipayPay(ajax, {
-                auth_code: alipay.authCode,
+                auth_code: authCode,
                 total_amount: sale_price,
                 subject: "收银台消费",
                 out_trade_no
@@ -267,7 +297,20 @@ export function Checkout({
 
             // 支付成功 → 提交订单到 POS 数据库
             setAlipay(s => ({ ...s, status: "success", message: `支付成功  流水号: ${result.tradeNo}` }));
-            await end();
+            // 注意：end() 的异常必须单独捕获，不能让它污染外层 catch，
+            // 否则 POS 下单失败时会把已成功的支付宝状态覆盖成 fail
+            // 传入 "支付宝" 避免读到闭包陈旧的 pay_type
+            // 传入 sale_price/0 避免读到现金输入框残留的陈旧值
+            try {
+                await end("支付宝", sale_price, 0);
+            } catch (endErr) {
+                // 支付宝已扣款，但本地下单失败 → 提示人工处理，不显示"❌重新扫码"
+                setAlipay(s => ({
+                    ...s,
+                    status: "success",
+                    message: `支付成功  流水号: ${result.tradeNo}（本地下单失败，请手动补录订单）`
+                }));
+            }
 
         } catch (err) {
             setAlipay(s => ({
@@ -280,8 +323,11 @@ export function Checkout({
 
     /**
      * 提交订单到 POS 数据库，打印小票（现金、微信、支付宝支付成功后均调此函数）
+     * @param {string} [overridePayType]   - 覆盖 pay_type（避免闭包陈旧）
+     * @param {number} [overrideClientPay] - 覆盖 client_pay（扫码支付时为 sale_price）
+     * @param {number} [overrideChange]    - 覆盖 change（扫码支付时为 0）
      */
-    async function end() {
+    async function end(overridePayType, overrideClientPay, overrideChange) {
         let allCount = 0;
         const commodity_list = list.map(
             ({
@@ -303,9 +349,9 @@ export function Checkout({
         );
 
         const orderData = {
-            pay_type,
-            client_pay: show_client_pay,
-            change,
+            pay_type: overridePayType !== undefined ? overridePayType : pay_type,
+            client_pay: overrideClientPay !== undefined ? overrideClientPay : show_client_pay,
+            change: overrideChange !== undefined ? overrideChange : change,
             origin_price,
             sale_price,
             commodity_list,
@@ -332,9 +378,71 @@ export function Checkout({
         printStatus && PosPrint.print(data);
     }
 
+    /**
+     * 现金模式输入框的 keyDown 处理
+     * 职责：
+     *   1. 传递给 handleHotKey（F1~F5 等快捷键）
+     *   2. 用 cashScanBufferRef 缓冲扫码枪连续字符
+     *   3. Enter 时检测缓冲区是否为付款码，是则自动切换支付方式并发起支付
+     */
+    function handleCashInputKeyDown(e) {
+        handleHotKey(e);
+
+        const { key } = e;
+
+        if (key === "Enter") {
+            const buf = cashScanBufferRef.current;
+            cashScanBufferRef.current = "";
+
+            if (buf.length >= 16) {
+                const { isPayCode, payType } = detectPayCode(buf);
+                if (isPayCode) {
+                    e.preventDefault();
+                    setData(s => ({
+                        ...s,
+                        pay_type: payType,
+                        client_pay: sale_price,
+                        show_client_pay: sale_price,
+                        change: 0
+                    }));
+                    setAlipay({ authCode: buf, status: "idle", message: "" });
+                    // 支付宝直接自动发起支付；微信聚焦等待确认
+                    setTimeout(() => {
+                        if (payType === "支付宝") {
+                            checkAlipay(buf);
+                        } else {
+                            alipayInputRef.current && alipayInputRef.current.focus();
+                        }
+                    }, 30);
+                    return;
+                }
+            }
+
+            // 非付款码：走普通结账
+            check();
+            return;
+        }
+
+        // 积累字符到缓冲区（非可打印字符则重置）
+        if (key.length === 1) {
+            cashScanBufferRef.current += key;
+        } else {
+            cashScanBufferRef.current = "";
+        }
+    }
+
     function check() {
-        // 结账（现金/微信模式）
+        // 结账（现金/扫码模式）
         if (isAlipay) { checkAlipay(); return; }
+        if (isWechat) {
+            // 微信支付：占位逻辑，待微信支付接入后实现
+            // 目前仅提示（或可直接当普通记录处理）
+            if (!checkPassFlag) return;
+            // TODO: 接入微信支付后替换此处逻辑
+            if (alipay.authCode.length < 16) return;
+            setAlipay(s => ({ ...s, status: "fail", message: "微信扫码支付暂未接入，请选择其他支付方式" }));
+            return;
+        }
         if (!checkPassFlag) return;
 
         if (change > 100) {
@@ -366,14 +474,28 @@ export function Checkout({
     useEffect(() => {
         if (!status) return;
         setTimeout(() => {
-            // 当打开结账界面时将订单金额同步到结账界面里并聚焦和选中付款金额
-
+            // 当打开结账界面时将订单金额同步到结账界面里
+            // 如果有初始支付方式（扫码自动触发），则切换到对应方式
+            const nextPayType = initialPayType || hotKeyList[0].value;
             setData(s => ({
                 ...s,
                 show_client_pay: sale_price,
-                client_pay: sale_price
+                client_pay: sale_price,
+                pay_type: nextPayType
             }));
-            if (isAlipay) {
+
+            if (initialPayType === "支付宝" && initialAuthCode) {
+                // 支付宝：预填付款码并自动发起支付
+                // 传入 initialAuthCode 作为 overrideCode，绕过 state 闭包陈旧问题
+                setAlipay({ authCode: initialAuthCode, status: "idle", message: "" });
+                setTimeout(() => checkAlipay(initialAuthCode), 50);
+            } else if (initialPayType === "微信" && initialAuthCode) {
+                // 微信付款码：预填后聚焦等待手动确认
+                setAlipay({ authCode: initialAuthCode, status: "idle", message: "" });
+                setTimeout(() => {
+                    alipayInputRef.current && alipayInputRef.current.focus();
+                }, 50);
+            } else if (nextPayType === "支付宝" || nextPayType === "微信") {
                 alipayInputRef.current && alipayInputRef.current.focus();
             } else {
                 const { current } = inputRef;
@@ -468,8 +590,8 @@ export function Checkout({
                         </Radio.Group>
                     </div>
                     <div className={styled["check-wrap"]}>
-                        {isAlipay ? (
-                            // 支付宝模式：显示扫码输入框
+                        {isScanPay ? (
+                            // 扫码支付模式（支付宝/微信）：显示付款码输入框
                             <>
                                 <p>付款码: </p>
                                 <div className={styled["input-wrap"]}>
@@ -477,7 +599,7 @@ export function Checkout({
                                         size="large"
                                         ref={alipayInputRef}
                                         value={alipay.authCode}
-                                        placeholder="请用扫码枪扫描顾客手机付款码"
+                                        placeholder={`请用扫码枪扫描顾客手机${pay_type}付款码`}
                                         disabled={alipay.status === "paying"}
                                         onChange={e => {
                                             // React 16 事件池化：必须在进入 setAlipay 前先取出值，
@@ -505,7 +627,7 @@ export function Checkout({
                                 </div>
                             </>
                         ) : (
-                            // 现金/微信模式：原有付款金额输入框
+                            // 现金模式：原有付款金额输入框
                             <>
                                 <p>付款金额: </p>
                                 <div className={styled["input-wrap"]}>
@@ -513,10 +635,9 @@ export function Checkout({
                                         size="large"
                                         ref={inputRef}
                                         value={client_pay}
-                                        placeholder="请输入付款金额"
+                                        placeholder="请输入付款金额或扫顾客付款码"
                                         onChange={handleClientPay}
-                                        onKeyDown={handleHotKey}
-                                        onPressEnter={check}
+                                        onKeyDown={handleCashInputKeyDown}
                                     />
                                     <Button
                                         onClick={check}
@@ -528,8 +649,8 @@ export function Checkout({
                             </>
                         )}
                     </div>
-                    {/* 支付宝支付结果区（原作者留的空白占位） */}
-                    {isAlipay && alipay.status !== "idle" && (
+                    {/* 扫码支付结果区 */}
+                    {isScanPay && alipay.status !== "idle" && (
                         <div style={{
                             marginTop: 12,
                             padding: "8px 12px",
@@ -539,7 +660,7 @@ export function Checkout({
                             color: alipay.status === "success" ? "#52c41a" : alipay.status === "paying" ? "#1890ff" : "#ff4d4f",
                             fontSize: 13
                         }}>
-                            {alipay.status === "paying" && "⏳ 正在请求支付宝，请稍候..."}
+                            {alipay.status === "paying" && `⏳ 正在请求${pay_type}，请稍候...`}
                             {alipay.status === "success" && `✅ ${alipay.message}`}
                             {alipay.status === "fail" && (
                                 <>

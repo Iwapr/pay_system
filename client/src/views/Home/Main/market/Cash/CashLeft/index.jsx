@@ -21,7 +21,8 @@ export function CashLeft({
     addCommodity,
     hotkey,
     count,
-    money
+    money,
+    onPayCodeScanned
 }) {
 
 
@@ -38,6 +39,7 @@ export function CashLeft({
                     hotkey={hotkey}
                     count={count}
                     money={money}
+                    onPayCodeScanned={onPayCodeScanned}
                 />
                 <CashCommodity
                     commodityList={commodityList}
