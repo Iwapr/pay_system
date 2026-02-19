@@ -5,7 +5,7 @@
  * @module client/webpack/common
  */
 const path = require("path");
-const htmlWebpackPlugin = require("html-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 
@@ -13,7 +13,8 @@ module.exports = {
     entry: path.resolve("./", "src/index.js"),
     output: {
         path: path.resolve("./", "dist/"),
-        filename: "static/js/client.bundle.js",
+        filename: "static/js/[name].bundle.js",
+        chunkFilename: "static/js/[name].chunk.js",
         publicPath: "/"
     },
     module: {
@@ -24,6 +25,7 @@ module.exports = {
                     {
                         loader: "file-loader",
                         options: {
+                            esModule: false,
                             name: "static/images/[path][name].[ext]"
                         },
                     },
@@ -61,7 +63,10 @@ module.exports = {
                         }
                     },
                     {
-                        loader: "sass-loader"
+                        loader: "sass-loader",
+                        options: {
+                            api: "modern"
+                        }
                     },
                 ]
             },
@@ -83,16 +88,18 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin(),
-        new htmlWebpackPlugin({
+        new HtmlWebpackPlugin({
             template: path.resolve("./", "src/public/index.html"),
             filename: "./index.html"
         }),
-        new CopyWebpackPlugin([
-            {
-                from: "src/public/iconfontcn.js",
-                to:  "static/js/iconfontcn.js"
-            }
-        ])
+        new CopyWebpackPlugin({
+            patterns: [
+                {
+                    from: "src/public/iconfontcn.js",
+                    to: "static/js/iconfontcn.js"
+                }
+            ]
+        })
     ],
     resolve: {
         extensions: [".js", ".jsx", ".json"]

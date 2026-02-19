@@ -4,9 +4,26 @@
  * @module client/webpack/prod
  */
 const common = require("./webpack.common");
-const merge = require("webpack-merge");
-const path = require("path");
+const { merge } = require("webpack-merge");
 
 module.exports = merge(common, {
     mode: "production",
+    optimization: {
+        splitChunks: {
+            chunks: "all",
+            cacheGroups: {
+                vendors: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: "vendors",
+                    priority: 10
+                },
+                common: {
+                    minChunks: 2,
+                    name: "common",
+                    priority: 5,
+                    reuseExistingChunk: true
+                }
+            }
+        }
+    }
 });

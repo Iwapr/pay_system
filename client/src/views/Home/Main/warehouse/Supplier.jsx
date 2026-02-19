@@ -465,8 +465,8 @@ function _SupplierModal({ hideFn, status = false, type = "增加", form, flushLi
                     },
                     {
                         min: 1,
-                        max: 10,
-                        message: "供应商名称长度必须保持在1-10个字之间!"
+                        max: 20,
+                        message: "供应商名称长度必须保持在1-20个字之间!"
                     }
                 ]
             }

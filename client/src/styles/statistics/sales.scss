@@ -1,4 +1,4 @@
-@import "../global.scss";
+@use "../global.scss" as *;
 
 .sales-wrap {
   height: 100%;

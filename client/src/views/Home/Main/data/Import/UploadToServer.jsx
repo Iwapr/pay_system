@@ -3,9 +3,9 @@
  * @description 将解析后的导入数据提交到服务端并展示导入结果的操作组件
  * @module views/Home/Main/data/Import/UploadToServer
  */
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import styled from "../../../../../styles/data/import.scss";
-import { Button, Icon, Spin, Result } from "antd";
+import { Button, Icon, Spin, Result, Progress } from "antd";
 import { useAjax } from "../../../../AjaxProvider";
 import { DataManage } from "../../../../../tasks/data";
 
@@ -23,13 +23,46 @@ export function UploadToServer({
         update_count: 0,
         skip_count: 0
     });
+
+    const [progress, setProgress] = useState(0);
+
+    useEffect(() => {
+        if (uploadStatus !== "uploading") {
+            if (uploadStatus === "done") {
+                setProgress(100);
+            } else {
+                setProgress(0);
+            }
+            return;
+        }
+
+        const timer = setInterval(() => {
+            setProgress(p => {
+                if (p >= 96) return p;
+                const step = p < 60 ? 4 : 2;
+                return Math.min(96, p + step);
+            });
+        }, 300);
+
+        return () => clearInterval(timer);
+    }, [uploadStatus]);
+
     async function handleUpload() {
+        setProgress(3);
         setUploadStatus("uploading");
 
         try {
-            const { data } = await DataManage.importCommodity(ajax, importData);
+            const rules = importData && importData.rules ? importData.rules : {};
+            const isStockImport = Object.prototype.hasOwnProperty.call(rules, "stock_supplier_exist");
+
+            const request = isStockImport
+                ? DataManage.importStock(ajax, importData)
+                : DataManage.importCommodity(ajax, importData);
+
+            const { data } = await request;
 
             setResultData(data);
+            setProgress(100);
             setUploadStatus("done");
         } catch (error) {
             setUploadStatus("error");
@@ -55,13 +88,23 @@ export function UploadToServer({
         {
             status: "uploading",
             component: (
-                <Spin
-                    tip="正在导入数据，请稍候..."
-                    size="large"
-                    indicator={
-                        <Icon type="loading" style={{ fontSize: 48 }} spin />
-                    }
-                />
+                <div
+                    style={{
+                        width: 520,
+                        maxWidth: "90vw"
+                    }}
+                >
+                    <Spin
+                        tip="正在导入数据，请稍候..."
+                        size="large"
+                        indicator={
+                            <Icon type="loading" style={{ fontSize: 48 }} spin />
+                        }
+                    />
+                    <div style={{ marginTop: 20 }}>
+                        <Progress percent={progress} status="active" />
+                    </div>
+                </div>
             )
         },
         {

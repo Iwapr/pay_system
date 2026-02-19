@@ -10,13 +10,14 @@ import { useHistory, useLocation } from "react-router-dom";
 import { useAuth } from "../../AuthProvider";
 import { useTabs } from "../TabsProvider";
 import { IconOnline } from "../../../components/IconOnline";
-import logo from "../../../styles/images/logo.png";
+import logoAsset from "../../../styles/images/logo.png";
 import styled from "../../../styles/sidemenu.scss";
 
 const { menuMap, menuPath } = menuValue;
 
 const { SubMenu, Item } = Menu;
 const { Sider } = Layout;
+const ELECTRON_LOGO_URL = "images://static/images/src/styles/images/logo.png";
 
 function CustomIcon(icon, online, title) {
     return (
@@ -35,6 +36,9 @@ export function LeftSideMenu({ collapsed }) {
     const history = useHistory();
     const location = useLocation();
     const { isAdmin } = useAuth();
+    const logo = typeof window !== "undefined" && window.location.protocol === "file:"
+        ? ELECTRON_LOGO_URL
+        : logoAsset;
 
     useEffect(() => {
         const { pathname: path } = location;

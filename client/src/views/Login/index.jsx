@@ -10,9 +10,10 @@ import { useAuth } from "../AuthProvider";
 import { useAjax } from "../AjaxProvider";
 import style from "../../styles/login.scss";
 import { ConnectConfig } from "./ConnectConfig";
-import logo from "../../styles/images/logo.png";
+import logoAsset from "../../styles/images/logo.png";
 
 const { Text } = Typography;
+const ELECTRON_LOGO_URL = "images://static/images/src/styles/images/logo.png";
 
 function _Login({ form }) {
 
@@ -33,6 +34,9 @@ function _Login({ form }) {
     };
 
     const [isLoading, setLoading] = useState(false);
+    const logo = typeof window !== "undefined" && window.location.protocol === "file:"
+        ? ELECTRON_LOGO_URL
+        : logoAsset;
 
     function hasError() {
         // 判断是否有错误
@@ -111,7 +115,16 @@ function _Login({ form }) {
         <div className={style["login-bg"]}>
             <div className={style["login-wrapper"]}>
                 <Row type="flex" justify="center" className={style["title-wrap"]}>
-                    <img src={logo} alt="" className={style["logo"]} />
+                    <img
+                        src={logo}
+                        alt=""
+                        className={style["logo"]}
+                        onError={(event) => {
+                            if (event.currentTarget.src !== ELECTRON_LOGO_URL) {
+                                event.currentTarget.src = ELECTRON_LOGO_URL;
+                            }
+                        }}
+                    />
                     <Text
                         className={style["login-title"]}
                     >小牧收银系统</Text>

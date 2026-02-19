@@ -1,4 +1,4 @@
-@import "./global.scss";
+@use "./global.scss" as *;
 
 .user-manage-wrap {
   height: 100%;

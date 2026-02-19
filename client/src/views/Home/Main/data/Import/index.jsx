@@ -141,13 +141,48 @@ export function DataImport() {
                 }
             ]
         },
-        // {
-        //     type: "会员导入",
-        //     fields: [
-
-        //     ],
-        //     rules: []
-        // }
+        {
+            type: "初始入库导入",
+            fields: [
+                {
+                    field: "supplier_name",
+                    label: "供应商",
+                    convertFn: convertToString
+                },
+                {
+                    field: "barcode",
+                    label: "商品条码",
+                    required: true,
+                    convertFn: convertToString
+                },
+                {
+                    field: "in_price",
+                    label: "进价",
+                    required: true
+                },
+                {
+                    field: "count",
+                    label: "数量",
+                    required: true
+                }
+            ],
+            rules: [
+                {
+                    id: "stock_supplier_exist",
+                    label: "当供应商不存在时",
+                    option: [
+                        {
+                            value: true,
+                            label: "创建新供应商"
+                        },
+                        {
+                            value: false,
+                            label: "使用默认供应商"
+                        }
+                    ]
+                }
+            ]
+        }
     ];
 
 
@@ -173,6 +208,10 @@ export function DataImport() {
         },
         supplier_exist: {
             name: "supplier_exist",
+            value: false
+        },
+        stock_supplier_exist: {
+            name: "stock_supplier_exist",
             value: false
         }
     };
@@ -223,6 +262,7 @@ export function DataImport() {
         // 字段对应的处理钩子函数
 
         const config = {
+            import_type: option["import_type"].value,
             rules: {},
             data: []
         };

@@ -26,14 +26,24 @@ export function OtherConfig({
     const show_mapFields = useMemo(() => {
         // 筛选出导入数据的有效属性名中可以进行转换的属性
 
-        const keys = Object.keys(config.data[0]);
+        const firstItem = config && config.data && config.data[0];
+        if (!firstItem) return [];
+
+        const keys = Object.keys(firstItem);
         // 导入数据的所有有效属性名
 
         return mapFields.filter(({ field }) => keys.includes(field));
-    }, [mapFields]);
+    }, [mapFields, config]);
 
 
     const [currentField, setCurrentField] = useState(() => {
+        if (show_mapFields.length === 0) {
+            return {
+                field: null,
+                value_list: [],
+                value: undefined
+            };
+        }
 
         const field = show_mapFields[0].field;
 
@@ -59,6 +69,7 @@ export function OtherConfig({
 
 
     function handleCurrentField(field = show_mapFields[0].field) {
+        if (show_mapFields.length === 0) return;
         // 设置当前选中属性名
         // 同时更新相应属性值列表
 
@@ -107,10 +118,13 @@ export function OtherConfig({
     }
 
     function handleAddMapValue(_new_value) {
+        if (!currentField || !currentField.field) return;
         // 向映射列表里添加一条新的记录
         const new_value = _new_value.trim ? _new_value.trim() : _new_value;
         const { field, value } = currentField;
-        const { label } = show_mapFields.find(i => i.field === field);
+        const fieldItem = show_mapFields.find(i => i.field === field);
+        if (!fieldItem) return;
+        const { label } = fieldItem;
         setMapValueList(s => {
             const state = copyObj(s);
             const item = state.find(i => i.field === field);
@@ -217,7 +231,7 @@ export function OtherConfig({
                 status && MapList
             }
             {
-                status && (
+                status && show_mapFields.length > 0 && (
                     <RightContent
                         handleCurrentField={handleCurrentField}
                         handleCurrentValue={handleCurrentValue}
@@ -226,6 +240,13 @@ export function OtherConfig({
                         show_mapFields={show_mapFields}
                         setMapValueList={setMapValueList}
                     />
+                )
+            }
+            {
+                status && show_mapFields.length === 0 && (
+                    <div className={styled["right-wrap"]}>
+                        <p>当前导入类型无可映射字段，可直接下一步。</p>
+                    </div>
                 )
             }
         </div>

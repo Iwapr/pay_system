@@ -11,6 +11,12 @@ export class DataManage {
         return ajax.post("/api/data/import/commodity", data);
     }
 
+    static importStock(ajax, data) {
+        // 导入初始入库
+
+        return ajax.post("/api/data/import/stock", data);
+    }
+
     static exportData(ajax, type) {
         // 导出数据
 

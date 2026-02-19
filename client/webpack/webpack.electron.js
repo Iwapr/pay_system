@@ -5,63 +5,62 @@
  * @module client/webpack/electron
  */
 const common = require("./webpack.common");
-const merge = require("webpack-merge");
+const { mergeWithCustomize, customizeObject } = require("webpack-merge");
 const webpack = require("webpack");
-
-function customizeObject(a, b, key) {
-    if (key === "module") {
-
-        const a_rules = a.rules;
-        const b_rules = b.rules;
-
-        let rules = [];
-        for (let base_rule of a_rules) {
-            const { test } = base_rule;
-            const rule = b_rules.find(i => i.test + "" === test + "");
-
-            rules.push(rule ? rule : base_rule);
-        }
-
-        return {
-            rules
-        };
-    }
-    else if (key === "plugins") {
-
-        return b && b.length !== 0 && [...a, ...b] || undefined;
-    }
-
-    // Fall back to default merging
-    return undefined;
-}
 
 module.exports = env => {
 
     const TYPE = env && env.TYPE || "online";
-    return merge(
-        {
-            customizeObject
-        }
-    )(common, {
+    return mergeWithCustomize({
+        customizeObject: customizeObject((a, b, key) => {
+            if (key === "module") {
+                const a_rules = a.rules;
+                const b_rules = b.rules;
+
+                let rules = [];
+                for (let base_rule of a_rules) {
+                    const { test } = base_rule;
+                    const rule = b_rules.find(i => i.test + "" === test + "");
+
+                    rules.push(rule ? rule : base_rule);
+                }
+
+                return {
+                    rules
+                };
+            }
+            else if (key === "plugins") {
+
+                return b && b.length !== 0 && [...a, ...b] || undefined;
+            }
+
+            return undefined;
+        })
+    })(common, {
         mode: "production",
         output: {
             publicPath: "./"
         },
+        optimization: {
+            splitChunks: {
+                chunks: "all",
+                cacheGroups: {
+                    vendors: {
+                        test: /[\\/]node_modules[\\/]/,
+                        name: "vendors",
+                        priority: 10
+                    },
+                    common: {
+                        minChunks: 2,
+                        name: "common",
+                        priority: 5,
+                        reuseExistingChunk: true
+                    }
+                }
+            }
+        },
         module: {
             rules: [
-                {
-                    test: /\.(png|jpg|gif)$/,
-                    use: [
-                        {
-                            loader: "file-loader",
-                            options: {
-                                publicPath: "images://static/images/",
-                                outputPath: "static/images",
-                                name: "[hash].[ext]"
-                            },
-                        },
-                    ],
-                },
                 {
                     test: /\.less$/,
                     use: [
