@@ -6,7 +6,13 @@
  */
 const devEnv = {
     /** 开发环境允许 CORS 跨域的来源列表 */
-    allowOriginList: ["http://127.0.0.1:9000", "http://192.168.77.127:9000"]
+    allowOriginList: [
+        "http://localhost:9000",
+        "http://127.0.0.1:9000",
+        "http://192.168.2.50:9000",
+        "http://192.168.2.38:9000",
+        "http://192.168.2.39:9000"
+    ]
 }
 
 export default devEnv;

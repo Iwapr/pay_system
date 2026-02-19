@@ -6,6 +6,9 @@
 import merge from "../tools/merge";
 import { common } from "./common.env";
 
+// 自动使用当前页面的 hostname，局域网其他设备访问时无需手动配置 API 地址
+const hostname = typeof window !== "undefined" ? window.location.hostname : "127.0.0.1";
+
 export const devConfig = merge(common, {
-    baseURL: "http://127.0.0.1:8888"  // 本地开发服务器地址
+    baseURL: `http://${hostname}:8888`
 });

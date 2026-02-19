@@ -31,6 +31,15 @@
             "approve": true,
             "matchCommandLine": true
         },
-        "npm run dev:client": true
+        "npm run dev:client": true,
+        "Get-NetTCPConnection": true,
+        "/^cd server; \\$env:NODE_ENV='development'; \\$env:JWT_KEY='xiaomupossystem'; node src/index\\.js$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^\\$env:NODE_ENV='development'; \\$env:JWT_KEY='xiaomupossystem'; \\$env:DB_PATH='e:/pay_system/server/db/data\\.db'; node server/src/index\\.js$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
     }
 }
