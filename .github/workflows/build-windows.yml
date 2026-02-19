@@ -21,9 +21,11 @@ jobs:
         with:
           node-version: '22'
 
-      # ── 1. 安装根目录依赖，跳过 postinstall（sqlite3 编译留到后面手动触发）──
+      # ── 1. 安装根目录依赖
+      # --no-optional 跳过 pinyin 的可选依赖 nodejieba（旧版 nan，与 Electron 29 V8 不兼容）
+      # sqlite3 的 postinstall 会先尝试下载预编译包，失败后才从源码编译（此时 VS2019+SDK 已就绪）
       - name: 安装根目录依赖
-        run: npm install --ignore-scripts
+        run: npm install --no-optional
 
       # ── 1.5 从 GitHub Secrets 生成 secrets.js ──
       # 在 GitHub 仓库 → Settings → Secrets and variables → Actions 中添加：
